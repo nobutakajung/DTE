@@ -1,0 +1,189 @@
+<style type="text/css">
+	.header{
+		margin-top: 10px;
+	}
+	.box-border{
+		margin-top:10px;
+		margin-bottom: 10px;
+		border:1px solid;
+	}
+	.subject{
+		margin-left: 15px;
+	}
+</style>
+
+<ion-view view-title="บันทึก-SO">
+  <ion-content>
+
+    <div class='header text-center'>
+    	<h4>PCA/GPU SERVICE ORDER</h4>
+    </div>
+
+    <div class='list card'>
+		<label class="item item-input">
+	    	<span class="input-label">Date</span>
+	    	<span>{{createTime}}</span>
+	  	</label>
+	  	<label class="item item-input">
+		    <span class="input-label">Station</span>
+		    <input type="text" ng-model='saveso.station'>
+	  	</label>
+	  	<label class="item item-input">
+		    <span class="input-label">Air Carrier</span>
+		    <input type="text" ng-model='saveso.aircarrier'>
+	  	</label>
+	  	<label class="item item-input">
+		    <span class="input-label">Flight No.</span>
+		    <input type="text" ng-model='saveso.flightno'>
+	  	</label>
+	  	<label class="item item-input">
+		    <span class="input-label">Aircraft Type</span>
+		    <input type="text" ng-model='saveso.aircrafttype'>
+	  	</label>
+	  	<label class="item item-input">
+		    <span class="input-label">Aircraft Reg</span>
+		    <input type="text" ng-model='saveso.aircraftreg'>
+	  	</label>
+	  	<label class="item item-input">
+		    <span class="input-label">Aircraft STA</span>
+		    <input type="text" ng-model='saveso.aircraftsta'>
+	  	</label>
+	  	<label class="item item-input">
+		    <span class="input-label">Aircraft STD</span>
+		    <input type="text" ng-model='saveso.aircraftstd'>
+	  	</label>
+	  	<label class="item item-input">
+		    <span class="input-label">Gate No.</span>
+		    <input type="text" ng-model='saveso.gateno'>
+	  	</label>
+	</div>
+
+	<!-- <div class='list card'>
+		<h4 class='subject'>System</h4>
+		<ion-list>
+		  <ion-radio ng-model="saveso.system" ng-value="'PCA'">PCA</ion-radio>
+		  <ion-radio ng-model="saveso.system" ng-value="'GPU'">GPU</ion-radio>
+		</ion-list>
+	</div> -->
+
+	<div class='list card'>
+		<label class="item item-input">
+	    	<span class="input-label">ลายเซ็นต์-Start</span>
+	    	<button type='button' ng-click='OpenModalSignature(true)' class='button button-balanced'>Start</button>
+	  	</label>
+	</div>
+
+	<div class='list card'>
+		<label class="item item-input">
+	    	<span class="input-label">ลายเซ็นต์-Stop</span>
+	    	<button type='button' ng-click='OpenModalSignature(false)' class='button button-balanced'>Stop</button>
+	  	</label>
+	</div>
+
+	<div class='list card'>
+		<h4 class='subject'>PCA</h4>
+		<ion-item class='item item-checkbox'>
+			<label class='checkbox'>
+				<input type='checkbox' ng-model='saveso.pca.hose1' />
+			</label>
+			1 Hose
+		</ion-item>
+		<ion-item class='item item-checkbox'>
+			<label class='checkbox'>
+				<input type='checkbox' ng-model='saveso.pca.hose2' />
+			</label>
+			2 Hose
+		</ion-item>
+		<label ng-show="saveso.startSignature && saveso.startSignature.length > 0" class="item item-input">
+		    <span class="input-label"><button ng-click='stampStartDateTime(true)' class='button button-assertive'>Start</button></span>
+		    <span>{{saveso.pca.startTxt}}</span>
+	  	</label>
+	  	<label ng-show="saveso.stopSignature && saveso.stopSignature.length > 0" class="item item-input">
+		    <span class="input-label"><button ng-click='stampStopDateTime(true)' class='button button-assertive'>Stop</button></span>
+		    <span>{{saveso.pca.stopTxt}}</span>
+	  	</label>
+	  	<label class="item item-input">
+		    <span class="input-label">Total-Time</span>
+		    <span>{{saveso.pca.totaltime}}</span>
+	  	</label>
+
+	  	<h4 class='subject'>GPU</h4>
+		<ion-item class='item item-checkbox'>
+			<label class='checkbox'>
+				<input type='checkbox' ng-model='saveso.gpu.plug1' />
+			</label>
+			1 Plug
+		</ion-item>
+		<ion-item class='item item-checkbox'>
+			<label class='checkbox'>
+				<input type='checkbox' ng-model='saveso.gpu.plug2' />
+			</label>
+			2 Plug
+		</ion-item>
+		<label ng-show="saveso.startSignature && saveso.startSignature.length > 0" class="item item-input">
+		    <span class="input-label"><button ng-click='stampStartDateTime(false)' class='button button-assertive'>Start</button></span>
+		    <span>{{saveso.gpu.startTxt}}</span>
+	  	</label>
+	  	<label ng-show="saveso.stopSignature && saveso.stopSignature.length > 0" class="item item-input">
+		    <span class="input-label"><button ng-click='stampStopDateTime(false)' class='button button-assertive'>Stop</button></span>
+		    <span>{{saveso.gpu.stopTxt}}</span>
+	  	</label>
+	  	<label class="item item-input">
+		    <span class="input-label">Total-Time</span>
+		    <span>{{saveso.gpu.totaltime}}</span>
+	  	</label>
+	</div>
+
+<!-- 	<div class='list card'>
+		<label class="item item-input">
+		    <span class="input-label">Service Order No.</span>
+		    <input type="text" ng-model='saveso.orderno'>
+	  	</label>
+	</div> -->
+
+	<div class='list card'>
+		<h4 class='subject'>Operated By</h4>
+		<label class="item item-input">
+		    <span class="input-label">ID No.</span>
+		    <span>{{saveso.idno}}</span>
+	  	</label>
+	  	<label class="item item-input">
+		    <span class="input-label">Name</span>
+		    <span>{{saveso.username}}</span>
+	  	</label>
+	</div>
+
+	<!-- <div class='list card'>
+		<h4 class='subject'>Customer's Authority(Start)</h4>
+		<canvas id='custAuthorityStartCanvas' style='border: 1px solid black;width:100%;height:180px;'></canvas>
+		<div class='button-bar'>
+          	<a class='button button-assertive' ng-click='clearStartCanvas()'>Clear</a>
+      	</div>
+	</div>
+
+	<div class='list card'>
+		<h4 class='subject'>Customer's Authority(Stop)</h4>
+		<canvas id='custAuthorityStopCanvas' style='border: 1px solid black;width:100%;height:180px;'></canvas>
+		<div class='button-bar'>
+          	<a class='button button-assertive' ng-click='clearStopCanvas()'>Clear</a>
+      	</div>
+	</div> -->
+
+	<div class='list card'>
+		<h4 class='subject'>Condition of Charge</h4>
+		<label class='item item-input padding'>
+			<textarea ng-model='saveso.condition'></textarea>
+		</label>
+	</div>
+
+	<div class='list card'>
+		<h4 class='subject'>Remark</h4>
+		<label class='item item-input padding'>
+			<textarea ng-model='saveso.remark'></textarea>
+		</label>
+	</div>
+
+	<button type='button' class='button button-block button-positive' ng-click='doSaveSO()'>ตกลง</button>
+
+  </ion-content>
+</ion-view>

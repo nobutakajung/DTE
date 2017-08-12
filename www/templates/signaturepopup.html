@@ -1,0 +1,30 @@
+<div class='modal'>
+
+	<header-bar class='bar bar-header bar-calm'>
+    	<h1 class="title">Signature</h1>
+    	<div class="buttons">
+      	<button class="button button-clear" ng-click="closeSignature()">ปิด</button>
+    	</div>
+  	</header-bar>
+
+  	<ion-content scroll='false'>
+
+    	<div class='list'>
+
+      		<div>
+        		<div class='item item-divider'>
+          			ลายเซ็น
+        		</div>
+    			<div class='item text-center' >
+          			<canvas id='signatureCanvas' width='280' style='border: 1px solid black;'></canvas>
+          			<button class='button button-small button-block icon ion-trash-a button-assertive' ng-click='clearCanvas()'></button>
+        		</div>  
+      		</div>
+      
+	      	<input type='button' class='button button-block button-positive' ng-click='saveSignature()' value='ตกลง' />
+
+    	</div>
+
+  </ion-content>
+
+</div>
