@@ -2,6 +2,22 @@ angular.module('starter')
 
 .controller('SaveSOCtrl', function($scope, $ionicModal) {
 
+  //AutoComplete//
+  $scope.autoCompleteDatas = [{FLNO:'TG123'},{FLNO:'TG124'},{FLNO:'TG125'}];
+  //read employee master data from file
+  // ReadEmployeeMasterData($q,APIService,$cordovaFile).then(function(response){
+  //   if(response != null) $scope.autoCompleteDatas = response;
+  // });
+
+  $scope.getFlights = function (query) {
+    if(query){
+      return {items:$scope.autoCompleteDatas};
+    }
+    return {items:[]};
+  };
+  //AutoComplete//
+
+
   $scope.createTime = GetStartStopDateTimeTxt(new Date());
 
   $scope.saveso = {station:'', aircarrier:'', flightno:'', aircrafttype:'', aircraftreg:'',

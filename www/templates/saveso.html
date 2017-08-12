@@ -10,6 +10,9 @@
 	.subject{
 		margin-left: 15px;
 	}
+	.button-clear.button-clear{
+		color:#444 !important;
+	}
 </style>
 
 <ion-view view-title="บันทึก-SO">
@@ -34,8 +37,23 @@
 	  	</label>
 	  	<label class="item item-input">
 		    <span class="input-label">Flight No.</span>
-		    <input type="text" ng-model='saveso.flightno'>
+		    <i class="icon ion-ios-search placeholder-icon"></i>
+		    <input ion-autocomplete type="search" readonly="readonly" class="ion-autocomplete" autocomplete="off"
+                       ng-model="saveso.flightno"
+                       item-value-key="FLNO"
+                       item-view-value-key="FLNO"
+                       items-method="getFlights(query)"
+                       items-method-value-key="items"
+                       placeholder=" ค้นหา Flight No."
+                       items-clicked-method="itemsClicked(callback)"
+                       items-removed-method="itemsRemoved(callback)"
+                       max-selected-items="1"/>
 	  	</label>
+
+        <!-- <label class="item-input-wrapper">
+        	<i class="icon ion-ios-search placeholder-icon"></i>
+        </label> -->
+          
 	  	<label class="item item-input">
 		    <span class="input-label">Aircraft Type</span>
 		    <input type="text" ng-model='saveso.aircrafttype'>
