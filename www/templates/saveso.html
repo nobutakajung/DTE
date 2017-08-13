@@ -13,6 +13,10 @@
 	.button-clear.button-clear{
 		color:#444 !important;
 	}
+	.upload-btn{
+		margin-left: 15px;
+		margin-bottom: 15px;
+	}
 </style>
 
 <ion-view view-title="บันทึก-SO">
@@ -199,6 +203,24 @@
 		<label class='item item-input padding'>
 			<textarea ng-model='saveso.remark'></textarea>
 		</label>
+	</div>
+
+	<div class='list card'>
+		<h4 class='subject'>Upload รูปภาพ</h4>
+		<button type='button' class='button button-royal upload-btn'>เลือกรูป</button>
+
+		<div ng-repeat='img in uploadImgs track by $index' class='item item-thumbnail-left item-button-right'>
+			<img src="{{img}}">
+			<button class='button button-assertive' ng-click='removeUploadImg($index)'>
+				<i class='icon ion-close-circled'></i>
+			</button>
+		</div>
+
+		<!-- <div class='item item-body'>
+			<img src="img/1.jpg" class='full-image'>	
+		</div> -->
+		
+
 	</div>
 
 	<button type='button' class='button button-block button-positive' ng-click='doSaveSO()'>ตกลง</button>

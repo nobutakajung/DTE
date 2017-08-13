@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, AuthService) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, AuthService, APIService, $ionicPopup) {
 
   // Form data for the login modal
   $scope.loginData = {};
@@ -31,10 +31,13 @@ angular.module('starter.controllers', [])
     console.log('Doing login', $scope.loginData);
     AuthService.login($scope.loginData.username,$scope.loginData.password).then(
       function(response){
-        $scope.closeLogin(); 
-        $scope.isAuthen = true;
+        if(response) {
+          $scope.isAuthen = true;
+          $scope.closeLogin();
+        } 
+        else IonicAlert($ionicPopup,"username/password ผิด",null);
       },
-      function(response){alert('username/password ผิดพลาด');});
+      function(response){IonicAlert($ionicPopup,"username/password ผิด",null);});
   };
 
   $scope.logout = function(){

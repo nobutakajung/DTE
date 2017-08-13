@@ -17,6 +17,7 @@ angular.module('starter')
   };
   //AutoComplete//
 
+  $scope.uploadImgs = ['img/1.jpg','img/2.jpg','img/3.jpg'];
 
   $scope.createTime = GetStartStopDateTimeTxt(new Date());
 
@@ -49,6 +50,10 @@ angular.module('starter')
 
   $scope.doSaveSO = function(){
     console.log($scope.saveso);
+  }
+
+  $scope.removeUploadImg = function(index){
+    $scope.uploadImgs.splice(index,1);
   }
 
   $scope.OpenModalSignature = function(isStart){

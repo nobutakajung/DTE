@@ -1,6 +1,6 @@
 angular.module('starter')
 
-    .service('AuthService', function($q) {
+    .service('AuthService', function($q,APIService) {
         var username = '';
         
         function loadUserCredentials() {
@@ -16,10 +16,21 @@ angular.module('starter')
 
         var login = function(user, pw) {
             return $q(function(resolve,reject){
-                window.localStorage.setItem('AuthServices_isAuthenticated',true);
-                window.localStorage.setItem('UserName',user);
-                window.localStorage.setItem('UserId',1);
-                return resolve(true);
+                APIService.ShowLoading();
+                var url = APIService.hostname() + '/SO/Login';
+                var data = {UserID:user,Password:pw};
+                APIService.httpPost(url,data,function(response){
+                    APIService.HideLoading();
+                    if(response != null && response.data){
+                        //keep userdata into local storage
+                        window.localStorage.setItem('AuthServices_isAuthenticated',true);
+                        window.localStorage.setItem('UserName',user);
+                        window.localStorage.setItem('UserId',1);
+                        return resolve(true);    
+                    }
+                    else return resolve(false);
+                },function(error){return resolve(false);console.log(error);})
+                
             })
         };
 

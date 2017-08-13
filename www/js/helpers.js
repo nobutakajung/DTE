@@ -50,3 +50,10 @@ function DiffStartStopDate(startDate, stopDate, elemId) {
     var diffMins = Math.round(diff / 60000);
     return diffMins;
 }
+
+function IonicAlert($ionicPopup,title,callback){
+  var alertPopup = $ionicPopup.alert({title: title});
+   alertPopup.then(function(res) {
+    if(callback != null) callback();
+   });
+};
