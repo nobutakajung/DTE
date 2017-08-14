@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('SaveSOCtrl', function($scope, $ionicModal) {
+.controller('SaveSOCtrl', function($scope, $ionicModal, APIService, $ionicPopup) {
 
   //AutoComplete//
   $scope.autoCompleteDatas = [{FLNO:'TG123'},{FLNO:'TG124'},{FLNO:'TG125'}];
@@ -25,7 +25,8 @@ angular.module('starter')
                    aircraftsta:'', aircraftstd:'', gateno:'', system:'PCA', 
                    pca:{hose1:true,hose2:false, startTxt:'', start:'', startDate:'', stopTxt:'', stopDate:'', stop:'',totaltime:''},
                    gpu:{plug1:true,plug2:false, startTxt:'', start:'', startDate:'', stopTxt:'', stopDate:'', stop:'',totaltime:''},
-                   idno:window.localStorage.getItem('UserId'),username:window.localStorage.getItem('UserName'), startSignature:'', stopSignature:'', condition:'', remark:''
+                   idno:window.localStorage.getItem('UserId'),username:window.localStorage.getItem('UserName'), startSignature:'', 
+                   stopSignature:'', condition:'', remark:''
                   };
 
   $scope.currentSignature;
@@ -49,7 +50,33 @@ angular.module('starter')
   }
 
   $scope.doSaveSO = function(){
-    console.log($scope.saveso);
+    APIService.ShowLoading();
+    var url = APIService.hostname() + '/SO/SaveSO';
+    var data = {
+                Station:$scope.saveso.station, FlightNo:$scope.saveso.flightno, ACType:$scope.saveso.aircrafttype, ACCarrier:$scope.saveso.aircarrier,
+                ACReg:$scope.saveso.aircraftreg, STA:$scope.saveso.aircraftsta, STD:$scope.saveso.aircraftstd, GateNo:$scope.saveso.gateno,
+                PCA1:$scope.saveso.pca.hose1, PCA2:$scope.saveso.pca.hose2, PCAStart:$scope.saveso.pca.start, PCAStop:$scope.saveso.pca.stop,
+                PCATotalTime:$scope.saveso.pca.totaltime, GPU1:$scope.saveso.gpu.plug1, GPU2:$scope.saveso.gpu.plug2,
+                GPUStart:$scope.saveso.gpu.start, GPUStop:$scope.saveso.gpu.stop, GPUTotalTime:$scope.saveso.gpu.totaltime,
+                UserID:$scope.saveso.idno, CustIDStart:$scope.saveso.username, CustSignStart:$scope.saveso.startSignature,
+                CustIDStop:$scope.saveso.username, CustSignStop:$scope.saveso.stopSignature, CondOfCharge:$scope.saveso.condition,
+                Remark:$scope.saveso.remark, UploadImages:$scope.uploadImgs
+               };
+    APIService.httpPost(url,data,function(response){
+      APIService.HideLoading();
+      if(response != null && response.data.success == 1){
+        //success
+        IonicAlert($ionicPopup,"สร้างรายการเรียบร้อย : " + response.data.message,function(){
+          window.location = '#/app/home';
+        });
+      }
+      else{
+        //not success
+        IonicAlert($ionicPopup,response.data.message,null);
+      }
+    },function(error){
+      APIService.HideLoading();
+    })
   }
 
   $scope.removeUploadImg = function(index){
