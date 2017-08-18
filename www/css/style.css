@@ -1,1 +1,19 @@
 /* Empty. Add your own CSS if you like */
+.header{
+	margin-top: 10px;
+}
+.box-border{
+	margin-top:10px;
+	margin-bottom: 10px;
+	border:1px solid;
+}
+.subject{
+	margin-left: 15px;
+}
+.button-clear.button-clear{
+	color:#444 !important;
+}
+.upload-btn{
+	margin-left: 15px;
+	margin-bottom: 15px;
+}

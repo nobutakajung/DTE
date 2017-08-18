@@ -60,7 +60,8 @@ angular.module('starter').service('APIService',function($http,$ionicLoading,$q,$
 	    //return 'https://10.74.17.188:8443/AOTWebAPI';
         //return 'http://localhost:51754/api';
         // return 'http://localhost:4871/API';
-        return 'http://localhost/DTEAPI/API';
+        // return 'http://localhost/DTEAPI/API';
+        return 'https://mobile.airportthai.co.th/DTE/API';
 	};
 
 	this.ShowLoading = function () {
@@ -71,7 +72,7 @@ angular.module('starter').service('APIService',function($http,$ionicLoading,$q,$
             showBackdrop: true,
             maxWidth: 200,
             showDelay: 0,
-            template:'<img src="img/loading.gif" />'
+            template:'<img style="width:60px;" src="img/loading.gif" />'
         });
     };
 

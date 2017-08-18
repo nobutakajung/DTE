@@ -51,9 +51,42 @@ function DiffStartStopDate(startDate, stopDate, elemId) {
     return diffMins;
 }
 
+function GetTimeFormatFromDateFormat(data) {
+    var result = data.substring(8,10) + ':' + data.substring(10,12);
+    return result;
+}
+
 function IonicAlert($ionicPopup,title,callback){
   var alertPopup = $ionicPopup.alert({title: title});
    alertPopup.then(function(res) {
     if(callback != null) callback();
    });
 };
+
+function ConvertQueryResultToArray(data){
+    var newArr = [];
+    for (var i = 0; i <= data.rows.length - 1; i++) {
+        newArr.push(data.rows.item(i));
+    };
+    return newArr;
+};
+
+function filterFlightDatas(data,query){
+  query = query.toLowerCase();
+  var result = [];
+  for (var i = 0; i <= data.length - 1; i++) {
+    if(data[i].FlightNo.toLowerCase().indexOf(query) >= 0) result.push(data[i]);
+    if(result.length == 8) break;
+  };
+  return result;
+};
+
+function  GetNewDateByDTEDateFormat(inputDate) {
+    if(inputDate == null) return null;
+    var year = inputDate.substring(0,4);
+    var month = inputDate.substring(4,6);
+    var day = inputDate.substring(6,8);
+    var hour = inputDate.substring(8,10);
+    var minute = inputDate.substring(10,12);
+    return new Date(year,month,day,hour,minute,0);
+}

@@ -1,13 +1,11 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, AuthService, APIService, $ionicPopup) {
+.controller('AppCtrl', function($scope, $ionicModal, AuthService, APIService) {
 
   // Form data for the login modal
   $scope.loginData = {};
 
   $scope.isAuthen = AuthService.isAuthenticated();
-
-  //if($scope.isAuthen) window.location = '#/app/home';
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {

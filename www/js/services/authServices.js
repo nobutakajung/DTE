@@ -29,7 +29,7 @@ angular.module('starter')
                         return resolve(true);    
                     }
                     else return resolve(false);
-                },function(error){return resolve(false);console.log(error);})
+                },function(error){ APIService.HideLoading(); return resolve(false); console.log(error);})
                 
             })
         };

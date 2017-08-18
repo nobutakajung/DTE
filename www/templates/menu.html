@@ -21,11 +21,11 @@
         <ion-item ng-show='!isAuthen' menu-close ng-click="login()">
           เข้าสู่ระบบ
         </ion-item>
-        <ion-item ng-show='isAuthen' menu-close href="#/app/saveso">
+        <ion-item ng-show='isAuthen' menu-close href="#/app/saveoreditso?id=0">
           บันทึก SO
         </ion-item>
-        <ion-item ng-show='isAuthen' menu-close href="#/app/browse">
-          ค้นหา/แก้ไข SO
+        <ion-item ng-show='isAuthen' menu-close href="#/app/listso">
+          รายการ SO
         </ion-item>
         <ion-item ng-show='isAuthen' menu-close ng-click='logout()'>
           ออกจากระบบ

@@ -1,0 +1,16 @@
+<ion-view cache-view='false' view-title="รายการ-SO">
+  <ion-content>
+
+    <div class='list'>
+    	<a class='item item-button-right' href='#/app/saveoreditso?id={{item.id}}' ng-repeat='item in transactions'>
+    		<h2>{{item.WONumber}}</h2>
+			<p>FlightNo: {{item.FlightNo}}</p>
+			<p>CreateDate: {{item.CreatedDateTxt}}</p>
+			<button class='button button-assertive' ng-click='DeleteSO(item.id)'>
+				<i class='icon ion-trash-a'></i>
+			</button>
+    	</a>
+	</div>
+
+  </ion-content>
+</ion-view>

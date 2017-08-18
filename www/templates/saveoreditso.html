@@ -1,29 +1,22 @@
-<style type="text/css">
-	.header{
-		margin-top: 10px;
-	}
-	.box-border{
-		margin-top:10px;
-		margin-bottom: 10px;
-		border:1px solid;
-	}
-	.subject{
-		margin-left: 15px;
-	}
-	.button-clear.button-clear{
-		color:#444 !important;
-	}
-	.upload-btn{
-		margin-left: 15px;
-		margin-bottom: 15px;
-	}
-</style>
+<ion-view cache-view='false' view-title="{{title}}">
 
-<ion-view view-title="บันทึก-SO">
   <ion-content>
-
     <div class='header text-center'>
     	<h4>PCA/GPU SERVICE ORDER</h4>
+    </div>
+
+    <div class='list card' ng-show='SOID != 0'>
+    	<div class='item item-button-right'>
+    		พิมพ์ใบ Service Order
+    		<button type='button' class='button button-small icon-left ion-printer button-balanced' ng-show='SOID != 0' ng-click='printSO()'> Print-SO</button>		
+    	</div>
+    </div>
+
+    <div class='list card'>
+    	<label class="item item-input">
+	    	<span class="input-label">ServiceRate</span>
+	    	<span>{{serviceRate}}</span>
+	  	</label>
     </div>
 
     <div class='list card'>
@@ -44,8 +37,8 @@
 		    <i class="icon ion-ios-search placeholder-icon"></i>
 		    <input ion-autocomplete type="search" readonly="readonly" class="ion-autocomplete" autocomplete="off"
                        ng-model="saveso.flightno"
-                       item-value-key="FLNO"
-                       item-view-value-key="FLNO"
+                       item-value-key="FlightNo"
+                       item-view-value-key="FlightNo"
                        items-method="getFlights(query)"
                        items-method-value-key="items"
                        placeholder=" ค้นหา Flight No."
@@ -53,10 +46,6 @@
                        items-removed-method="itemsRemoved(callback)"
                        max-selected-items="1"/>
 	  	</label>
-
-        <!-- <label class="item-input-wrapper">
-        	<i class="icon ion-ios-search placeholder-icon"></i>
-        </label> -->
           
 	  	<label class="item item-input">
 		    <span class="input-label">Aircraft Type</span>
@@ -66,27 +55,19 @@
 		    <span class="input-label">Aircraft Reg</span>
 		    <input type="text" ng-model='saveso.aircraftreg'>
 	  	</label>
-	  	<label class="item item-input">
-		    <span class="input-label">Aircraft STA</span>
-		    <input type="text" ng-model='saveso.aircraftsta'>
-	  	</label>
-	  	<label class="item item-input">
-		    <span class="input-label">Aircraft STD</span>
-		    <input type="text" ng-model='saveso.aircraftstd'>
-	  	</label>
+	  	<div class="item" ng-disabled='!saveso.aircraftsta || saveso.aircraftsta.length == 0' ion-datetime-picker time ng-model="saveso.aircraftstaTxt" ng-change='TimeChange(true)'>
+	  		Aircraft STA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    	{{saveso.aircraftstaTxt| date: "HH:mm"}}
+	  	</div>
+	  	<div class="item" ng-disabled='!saveso.aircraftstd || saveso.aircraftstd.length == 0' ion-datetime-picker time ng-model="saveso.aircraftstdTxt" ng-change='TimeChange(false)'>
+	  		Aircraft STD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    	{{saveso.aircraftstdTxt| date: "HH:mm"}}
+	  	</div>
 	  	<label class="item item-input">
 		    <span class="input-label">Gate No.</span>
 		    <input type="text" ng-model='saveso.gateno'>
 	  	</label>
 	</div>
-
-	<!-- <div class='list card'>
-		<h4 class='subject'>System</h4>
-		<ion-list>
-		  <ion-radio ng-model="saveso.system" ng-value="'PCA'">PCA</ion-radio>
-		  <ion-radio ng-model="saveso.system" ng-value="'GPU'">GPU</ion-radio>
-		</ion-list>
-	</div> -->
 
 	<div class='list card'>
 		<label class="item item-input">
@@ -156,13 +137,6 @@
 	  	</label>
 	</div>
 
-<!-- 	<div class='list card'>
-		<label class="item item-input">
-		    <span class="input-label">Service Order No.</span>
-		    <input type="text" ng-model='saveso.orderno'>
-	  	</label>
-	</div> -->
-
 	<div class='list card'>
 		<h4 class='subject'>Operated By</h4>
 		<label class="item item-input">
@@ -174,22 +148,6 @@
 		    <span>{{saveso.username}}</span>
 	  	</label>
 	</div>
-
-	<!-- <div class='list card'>
-		<h4 class='subject'>Customer's Authority(Start)</h4>
-		<canvas id='custAuthorityStartCanvas' style='border: 1px solid black;width:100%;height:180px;'></canvas>
-		<div class='button-bar'>
-          	<a class='button button-assertive' ng-click='clearStartCanvas()'>Clear</a>
-      	</div>
-	</div>
-
-	<div class='list card'>
-		<h4 class='subject'>Customer's Authority(Stop)</h4>
-		<canvas id='custAuthorityStopCanvas' style='border: 1px solid black;width:100%;height:180px;'></canvas>
-		<div class='button-bar'>
-          	<a class='button button-assertive' ng-click='clearStopCanvas()'>Clear</a>
-      	</div>
-	</div> -->
 
 	<div class='list card'>
 		<h4 class='subject'>Condition of Charge</h4>
@@ -207,7 +165,7 @@
 
 	<div class='list card'>
 		<h4 class='subject'>Upload รูปภาพ</h4>
-		<button type='button' class='button button-royal upload-btn'>เลือกรูป</button>
+		<button type='button' ng-click='UploadImage()' class='button button-royal upload-btn'>เลือกรูป</button>
 
 		<div ng-repeat='img in uploadImgs track by $index' class='item item-thumbnail-left item-button-right'>
 			<img src="{{img}}">
@@ -216,14 +174,12 @@
 			</button>
 		</div>
 
-		<!-- <div class='item item-body'>
-			<img src="img/1.jpg" class='full-image'>	
-		</div> -->
-		
-
 	</div>
 
-	<button type='button' class='button button-block button-positive' ng-click='doSaveSO()'>ตกลง</button>
+	<button type='button' class='button button-block button-positive' ng-click='doSaveOrEditSO()'>{{title}}</button>
 
   </ion-content>
+
 </ion-view>
+
+
