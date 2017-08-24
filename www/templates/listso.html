@@ -1,15 +1,26 @@
 <ion-view cache-view='false' view-title="รายการ-SO">
   <ion-content>
 
+  	<div class="bar bar-header item-input-inset">
+	    <label class="item-input-wrapper" ion-datetime-picker date ng-model="search.SearchDate" ng-change='TimeChange()'>
+	        <i class="icon ion-ios-search placeholder-icon" ></i>
+	        	<span style='height:34px;line-height:34px;'>{{search.SearchDate | date:"dd/MM/yyyy" }}</span>
+	    </label>
+	    <button type='button' ng-click='clearFilter()' class="ion-android-close button button-outline button-positive" ng-show="search.SearchDate || search.SearchDate.length > 0">
+	    </button>
+	</div>
+
     <div class='list'>
-    	<a class='item item-button-right' href='#/app/saveoreditso?id={{item.id}}' ng-repeat='item in transactions'>
-    		<h2>{{item.WONumber}}</h2>
-			<p>FlightNo: {{item.FlightNo}}</p>
-			<p>CreateDate: {{item.CreatedDateTxt}}</p>
+    	<div class='item item-button-right' ng-repeat='item in transactions'>
+    		<div ng-click='editSO(item.id)'>
+				<h2>{{item.WONumber}}</h2>
+				<p>FlightNo: {{item.FlightNo}}</p>
+				<p>CreateDate: {{item.CreatedDateTxt}}</p>
+    		</div>
 			<button class='button button-assertive' ng-click='DeleteSO(item.id)'>
 				<i class='icon ion-trash-a'></i>
 			</button>
-    	</a>
+    	</div>
 	</div>
 
   </ion-content>

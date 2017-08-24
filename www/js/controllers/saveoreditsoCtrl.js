@@ -4,6 +4,8 @@ angular.module('starter')
 
   $ionicPlatform.ready(function() {
 
+    //$scope.createTime = GetStartStopDateTimeTxt(new Date());
+
     $scope.SOID = $stateParams.id;
     $scope.EditTransaction;
     $scope.title = $scope.SOID == 0 ? 'บันทึก' : 'แก้ไข';
@@ -129,7 +131,7 @@ angular.module('starter')
 
     $scope.createTime = GetStartStopDateTimeTxt(new Date());
 
-    $scope.saveso = {station:'', aircarrier:'', flightno:'', aircrafttype:'', aircraftreg:'',
+    $scope.saveso = {station:window.localStorage.getItem('Station'), aircarrier:'', flightno:'', aircrafttype:'', aircraftreg:'',
                      aircraftsta:'', aircraftstaTxt:'', aircraftstd:'', aircraftstdTxt:'', gateno:'', system:'PCA', 
                      pca:{hose1:true,hose2:false, startTxt:'', start:'', startDate:'', stopTxt:'', stopDate:'', stop:'',totaltime:''},
                      gpu:{plug1:true,plug2:false, startTxt:'', start:'', startDate:'', stopTxt:'', stopDate:'', stop:'',totaltime:''},
@@ -229,7 +231,6 @@ angular.module('starter')
       else {
         //signature
         $scope.clearCanvas();
-        console.log($scope.saveso.startSignature);
         if(isStart) signature.fromDataURL($scope.saveso.startSignature);
         else signature.fromDataURL($scope.saveso.stopSignature);      
         $scope.modalSignature.show();

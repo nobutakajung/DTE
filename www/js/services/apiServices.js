@@ -61,7 +61,7 @@ angular.module('starter').service('APIService',function($http,$ionicLoading,$q,$
         //return 'http://localhost:51754/api';
         // return 'http://localhost:4871/API';
         // return 'http://localhost/DTEAPI/API';
-        return 'https://mobile.airportthai.co.th/DTE/API';
+        return 'https://mobile.airportthai.co.th/DTEAPI/API';
 	};
 
 	this.ShowLoading = function () {

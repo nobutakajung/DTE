@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, AuthService, APIService) {
+.controller('AppCtrl', function($scope, $ionicModal, AuthService, APIService, $ionicHistory, $ionicPopup) {
 
   // Form data for the login modal
   $scope.loginData = {};
@@ -41,6 +41,9 @@ angular.module('starter.controllers', [])
   $scope.logout = function(){
     AuthService.logout();
     $scope.isAuthen = false;
+    $ionicHistory.nextViewOptions({
+      disableBack: true
+    });
     window.location = '#/app/home';
   }
 

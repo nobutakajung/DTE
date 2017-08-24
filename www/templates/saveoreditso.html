@@ -12,14 +12,14 @@
     	</div>
     </div>
 
-    <div class='list card'>
+    <div ng-show='SOID != 0' class='list card'>
     	<label class="item item-input">
 	    	<span class="input-label">ServiceRate</span>
 	    	<span>{{serviceRate}}</span>
 	  	</label>
     </div>
 
-    <div class='list card'>
+    <div ng-show='false' class='list card'>
 		<label class="item item-input">
 	    	<span class="input-label">Date</span>
 	    	<span>{{createTime}}</span>
@@ -33,18 +33,20 @@
 		    <input type="text" ng-model='saveso.aircarrier'>
 	  	</label>
 	  	<label class="item item-input">
-		    <span class="input-label">Flight No.</span>
-		    <i class="icon ion-ios-search placeholder-icon"></i>
-		    <input ion-autocomplete type="search" readonly="readonly" class="ion-autocomplete" autocomplete="off"
-                       ng-model="saveso.flightno"
-                       item-value-key="FlightNo"
-                       item-view-value-key="FlightNo"
-                       items-method="getFlights(query)"
-                       items-method-value-key="items"
-                       placeholder=" ค้นหา Flight No."
-                       items-clicked-method="itemsClicked(callback)"
-                       items-removed-method="itemsRemoved(callback)"
-                       max-selected-items="1"/>
+		    <span class="input-label autocompletelbl">Flight No.</span>
+		    <div class='divautocomplete' style='width:1500px;'>
+		    	<!-- <i class="icon ion-ios-search placeholder-icon"></i> -->
+			    <input ion-autocomplete type="search" readonly="readonly" class="ion-autocomplete" autocomplete="off"
+	                       ng-model="saveso.flightno"
+	                       item-value-key="FlightNo"
+	                       item-view-value-key="FlightNo"
+	                       items-method="getFlights(query)"
+	                       items-method-value-key="items"
+	                       placeholder=" ค้นหา Flight No."
+	                       items-clicked-method="itemsClicked(callback)"
+	                       items-removed-method="itemsRemoved(callback)"
+	                       max-selected-items="1"/>
+		    </div>
 	  	</label>
           
 	  	<label class="item item-input">
@@ -55,14 +57,15 @@
 		    <span class="input-label">Aircraft Reg</span>
 		    <input type="text" ng-model='saveso.aircraftreg'>
 	  	</label>
-	  	<div class="item" ng-disabled='!saveso.aircraftsta || saveso.aircraftsta.length == 0' ion-datetime-picker time ng-model="saveso.aircraftstaTxt" ng-change='TimeChange(true)'>
-	  		Aircraft STA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	    	{{saveso.aircraftstaTxt| date: "HH:mm"}}
-	  	</div>
-	  	<div class="item" ng-disabled='!saveso.aircraftstd || saveso.aircraftstd.length == 0' ion-datetime-picker time ng-model="saveso.aircraftstdTxt" ng-change='TimeChange(false)'>
-	  		Aircraft STD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	    	{{saveso.aircraftstdTxt| date: "HH:mm"}}
-	  	</div>
+	  	<label class="item item-input" ng-disabled='!saveso.aircraftsta || saveso.aircraftsta.length == 0' ion-datetime-picker time ng-model="saveso.aircraftstaTxt" ng-change='TimeChange(true)'>
+	  		<span class='timepicker'>Aircraft STA</span>
+	    	<span class='timepickerVal'>{{saveso.aircraftstaTxt| date: "HH:mm"}}</span>
+	  	</label>
+	  	<label class="item item-input" ng-disabled='!saveso.aircraftstd || saveso.aircraftstd.length == 0' ion-datetime-picker time ng-model="saveso.aircraftstdTxt" ng-change='TimeChange(false)'>
+	  		<!-- <span>Aircraft STD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
+	  		<span class='timepicker'>Aircraft STD</span>
+	    	<span class='timepickerVal'>{{saveso.aircraftstdTxt| date: "HH:mm"}}</span>
+	  	</label>
 	  	<label class="item item-input">
 		    <span class="input-label">Gate No.</span>
 		    <input type="text" ng-model='saveso.gateno'>
@@ -102,7 +105,7 @@
 		    <span>{{saveso.pca.startTxt}}</span>
 	  	</label>
 	  	<label ng-show="saveso.stopSignature && saveso.stopSignature.length > 0" class="item item-input">
-		    <span class="input-label"><button ng-click='stampStopDateTime(true)' class='button button-assertive'>Stop</button></span>
+		    <span class="input-label"><button ng-disabled='!saveso.pca.start || saveso.pca.start.length <= 0' ng-click='stampStopDateTime(true)' class='button button-assertive'>Stop</button></span>
 		    <span>{{saveso.pca.stopTxt}}</span>
 	  	</label>
 	  	<label class="item item-input">
@@ -128,7 +131,7 @@
 		    <span>{{saveso.gpu.startTxt}}</span>
 	  	</label>
 	  	<label ng-show="saveso.stopSignature && saveso.stopSignature.length > 0" class="item item-input">
-		    <span class="input-label"><button ng-click='stampStopDateTime(false)' class='button button-assertive'>Stop</button></span>
+		    <span class="input-label"><button ng-disabled='!saveso.gpu.start || saveso.gpu.start.length <= 0' ng-click='stampStopDateTime(false)' class='button button-assertive'>Stop</button></span>
 		    <span>{{saveso.gpu.stopTxt}}</span>
 	  	</label>
 	  	<label class="item item-input">

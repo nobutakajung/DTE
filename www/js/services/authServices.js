@@ -21,11 +21,12 @@ angular.module('starter')
                 var data = {UserID:user,Password:pw};
                 APIService.httpPost(url,data,function(response){
                     APIService.HideLoading();
-                    if(response != null && response.data){
+                    if(response != null && response.data != null){
                         //keep userdata into local storage
                         window.localStorage.setItem('AuthServices_isAuthenticated',true);
                         window.localStorage.setItem('UserName',user);
-                        window.localStorage.setItem('UserId',1);
+                        window.localStorage.setItem('UserId',response.data.id);
+                        window.localStorage.setItem('Station',response.data.Station);
                         return resolve(true);    
                     }
                     else return resolve(false);
@@ -36,6 +37,9 @@ angular.module('starter')
 
         var logout = function() {
             window.localStorage.removeItem('AuthServices_isAuthenticated');
+            window.localStorage.removeItem('UserName');
+            window.localStorage.removeItem('UserId');
+            window.localStorage.removeItem('Station');
         };
 
         return {
