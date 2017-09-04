@@ -43,10 +43,9 @@ angular.module('starter')
     }
 
     function RemoveSO(id) {
-      var index = 0;
       for (var i = 0; i <= $scope.transactions.length - 1; i++) {
         if($scope.transactions[i].id == id){
-          $scope.transactions.splice($scope.transactions[i],1);
+          $scope.transactions.splice(i, 1);
           break;
         }
       };
