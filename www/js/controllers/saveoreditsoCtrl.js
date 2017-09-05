@@ -160,6 +160,7 @@ angular.module('starter')
     }
 
     $scope.doSaveOrEditSO = function(){
+      if(!CheckValidate()) return;
       APIService.ShowLoading();
       var url;
       if($scope.SOID == 0) url = APIService.hostname() + '/SO/SaveSO';
@@ -415,6 +416,28 @@ angular.module('starter')
           )
         }
       );
+    }
+
+    function CheckValidate(){
+      var flag = true;
+      //air carrier
+      if($scope.saveso.aircarrier == null || !$scope.saveso.aircarrier || $scope.saveso.aircarrier.length == 0) flag = false;
+      //flight no
+      if($scope.saveso.flightno == null || !$scope.saveso.flightno || $scope.saveso.flightno.length == 0) flag = false;
+      //aircraft type
+      if($scope.saveso.aircrafttype == null || !$scope.saveso.aircrafttype || $scope.saveso.aircrafttype.length == 0) flag = false;
+      //aircraft reg
+      if($scope.saveso.aircraftreg == null || !$scope.saveso.aircraftreg || $scope.saveso.aircraftreg.length == 0) flag = false;
+      //aircraft sta
+      if($scope.saveso.aircraftsta == null || !$scope.saveso.aircraftsta || $scope.saveso.aircraftsta.length == 0) flag = false;
+      //aircraft std
+      if($scope.saveso.aircraftstd == null || !$scope.saveso.aircraftstd || $scope.saveso.aircraftstd.length == 0) flag = false;
+
+      if(flag) return true;
+      else {
+        alert('Air-Carrier/ Flight-No/ Aircraft-Type/ Aircraft-Reg/ Aircraft STA/ Aircraft STD ห้ามเป็นค่าว่าง');
+        return false;
+      }
     }
 
   });
