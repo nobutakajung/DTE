@@ -285,7 +285,7 @@ angular.module('starter')
     $scope.UploadImage = function(){
       var options = { 
                      destinationType: Camera.DestinationType.DATA_URL,
-                     sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
+                     sourceType: Camera.PictureSourceType.CAMERA,
                      encodingType: Camera.EncodingType.JPEG,
                      targetWidth: 100,
                      targetHeight: 100,
