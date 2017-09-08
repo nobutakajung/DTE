@@ -159,12 +159,14 @@ angular.module('starter')
       $scope.modalSignature.hide();
     }
 
-    $scope.doSaveOrEditSO = function(){
+    $scope.doSaveOrEditSO = function(isTemp){
       if(!CheckValidate()) return;
       APIService.ShowLoading();
       var url;
-      if($scope.SOID == 0) url = APIService.hostname() + '/SO/SaveSO';
-      else url = APIService.hostname() + '/SO/EditSO';
+      if(isTemp) url = APIService.hostname() + '/SO/SaveTempSO';
+      else url = APIService.hostname() + '/SO/SaveSO';
+      // if($scope.SOID == 0) url = APIService.hostname() + '/SO/SaveSO';
+      // else url = APIService.hostname() + '/SO/EditSO';
       var data = {
                   Station:$scope.saveso.station, FlightNo:$scope.saveso.flightno, ACType:$scope.saveso.aircrafttype, ACCarrier:$scope.saveso.aircarrier,
                   ACReg:$scope.saveso.aircraftreg, STA:$scope.saveso.aircraftsta, STD:$scope.saveso.aircraftstd, GateNo:$scope.saveso.gateno,
@@ -180,8 +182,8 @@ angular.module('starter')
         if(response != null && response.data.success == 1){
           //success
           var message;
-          if($scope.SOID == 0) message = "สร้างรายการเรียบร้อย : " + response.data.message;
-          else message = "แก้ไขเรียบร้อย";
+          if(isTemp) message = "บันทึกรายการชั่วคราวเรียบร้อย";
+          else message = "บันทึกรายการเรียบร้อย : " + response.data.message;
           IonicAlert($ionicPopup, message, function(){
             $ionicHistory.nextViewOptions({
               disableBack: true
@@ -439,6 +441,10 @@ angular.module('starter')
         return false;
       }
     }
+
+    $scope.loadFlightData = function(){
+      LoadFlightData(null, FlightDataSQLite, APIService);  
+    };
 
   });
 

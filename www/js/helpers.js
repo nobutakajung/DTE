@@ -9,6 +9,22 @@ Date.prototype.dateslashformat = function(){
          ].join('/');
 }
 
+Date.prototype.datetimeslashformat = function(){
+    var mm = this.getMonth() + 1; // getMonth() is zero-based
+    var dd = this.getDate();
+    var yyyy = this.getFullYear();
+
+    var result = [(dd>9 ? '' : '0') + dd,
+            (mm>9 ? '' : '0') + mm,
+            this.getFullYear()
+         ].join('/');
+
+    var hour = this.getHours();
+    var minute = this.getMinutes();
+
+    return result + ' ' + (hour > 9 ? '' : '0') + hour + ':' + (minute > 9 ? '' : '0') + minute;
+}
+
 function GetStartStopDateTimeValue(currentdate) {
 	if(currentdate == null) return;
 
@@ -92,7 +108,7 @@ function filterFlightDatas(data,query){
   return result;
 };
 
-function  GetNewDateByDTEDateFormat(inputDate) {
+function GetNewDateByDTEDateFormat(inputDate) {
     if(inputDate == null) return null;
     var year = inputDate.substring(0,4);
     var month = inputDate.substring(4,6);
@@ -100,4 +116,61 @@ function  GetNewDateByDTEDateFormat(inputDate) {
     var hour = inputDate.substring(8,10);
     var minute = inputDate.substring(10,12);
     return new Date(year,month,day,hour,minute,0);
+}
+
+function GetSequence(APIService, $q) {
+    return $q(function(resolve){
+        APIService.ShowLoading();
+        var url = APIService.hostname() + '/SO/GetSequenceNo';
+        APIService.httpPost(url,null, 
+            function(response){
+                APIService.HideLoading();
+                if(response != null) return resolve(response.data);
+                else return resolve(null);
+            }, 
+            function(error){APIService.HideLoading(); return resolve(null);}
+        );
+    });
+}
+
+function CheckSequenceIsEqual(sequence){
+    var localSequence = window.localStorage.getItem('sequenceNo');
+    if(localSequence == null || localSequence != sequence) return false;
+    else return true;
+};
+
+function InitialFlightDataProcess(APIService, $q, FlightDataSQLite) {
+    GetSequence(APIService, $q).then(function(sequence){
+        if(sequence == null) return;
+        if(!CheckSequenceIsEqual(sequence)) LoadFlightData(sequence, FlightDataSQLite, APIService);      
+    });
+}
+
+function LoadFlightData(sequence, FlightDataSQLite, APIService) {
+    //delete recent data
+    FlightDataSQLite.DeleteAll().then(function(){
+        GetFlightData(sequence, FlightDataSQLite, APIService);
+    }); 
+}
+
+function GetFlightData(sequence, FlightDataSQLite, APIService){
+    //get new datas(for today)  
+    APIService.ShowLoading();
+    var url = APIService.hostname() + '/SO/GetFlightData';
+    var data = {FlightDate:GetStartStopDateTimeValue(new Date()).substring(0,8)}
+    APIService.httpPost(url,data,
+    function(response){
+      if(response != null && response.data.length > 0){
+        FlightDataSQLite.Add(response.data).then(function(){
+          APIService.HideLoading();
+          //keep current sequence in device
+          if(sequence != null) window.localStorage.setItem('sequenceNo',sequence);
+        });
+      }
+      else APIService.HideLoading();
+    },
+    function(error){
+      APIService.HideLoading();
+      console.log(error);
+    })
 }

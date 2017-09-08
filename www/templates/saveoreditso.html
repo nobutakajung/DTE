@@ -20,6 +20,13 @@
     </div> -->
 
     <div class='list card'>
+    	<div class='item item-button-right'>
+    		โหลด FlightData
+    		<button type='button' class='button button-small icon-left ion-printer button-balanced' ng-click='loadFlightData()'> Load-FlightData</button>		
+    	</div>
+    </div>
+
+    <div class='list card'>
 		<label class="item item-input">
 	    	<span class="input-label">Date</span>
 	    	<span>{{createTime}}</span>
@@ -179,7 +186,8 @@
 
 	</div>
 
-	<button type='button' class='button button-block button-positive' ng-click='doSaveOrEditSO()'>{{title}}</button>
+	<button type='button' class='button button-block button-balanced' ng-click='doSaveOrEditSO(true)'>บันทึกชั่วคราว</button>
+	<button type='button' class='button button-block button-positive' ng-click='doSaveOrEditSO(false)'>{{title}}</button>
 
   </ion-content>
 

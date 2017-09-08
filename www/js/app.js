@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'ion-autocomplete','ion-datetime-picker'])
 
-.run(function($ionicPlatform, SQLiteService, FlightDataSQLite, APIService) {
+.run(function($ionicPlatform, SQLiteService, FlightDataSQLite, APIService, $q) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -24,35 +24,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'ion-aut
     SQLiteService.OpenDB();
     //initial all tables
     SQLiteService.InitailTables();
+    //check sequence and import flightdata when is't not matched
+    InitialFlightDataProcess(APIService, $q, FlightDataSQLite);
 
-    InitialFlightDataProcess();
+    //ionic resume event
+    $ionicPlatform.on('resume', function(){
+      //check sequence and import flightdata when is't not matched
+      InitialFlightDataProcess(APIService, $q, FlightDataSQLite);
+    });
 
-    function InitialFlightDataProcess() {
-      //delete recent data
-      FlightDataSQLite.DeleteAll().then(function(){
-        GetFlightData();
-      });
-    }
-
-    function GetFlightData(){
-      //get new datas(for today)  
-      APIService.ShowLoading();
-      var url = APIService.hostname() + '/SO/GetFlightData';
-      var data = {FlightDate:GetStartStopDateTimeValue(new Date()).substring(0,8)}
-      APIService.httpPost(url,data,
-        function(response){
-          if(response != null && response.data.length > 0){
-            FlightDataSQLite.Add(response.data).then(function(){
-              APIService.HideLoading();
-            });
-          }
-          else APIService.HideLoading();
-        },
-        function(error){
-          APIService.HideLoading();
-          console.log(error);
-        })
-    }
   });
 })
 
@@ -65,6 +45,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'ion-aut
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
+
+  .state('app.listrecall', {
+    url: '/listrecall',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/listrecall.html',
+        controller:'ListRecallCtrl'
+      }
+    }
+  }) 
 
   .state('app.listso', {
     url: '/listso',
