@@ -6,6 +6,7 @@ angular.module('starter')
 
     //$scope.createTime = GetStartStopDateTimeTxt(new Date());
 
+    $scope.RefId = $stateParams.refid;
     $scope.SOID = $stateParams.id;
     $scope.EditTransaction;
     $scope.title = $scope.SOID == 0 ? 'บันทึก' : 'แก้ไข';
@@ -63,8 +64,9 @@ angular.module('starter')
     function InitialProcess(){
       //for auto complete
       GetFlightDatas();
-      //EDIT bind data to all inputs
+      //check come from listrecall or listso
       if($scope.SOID != 0) GetAndBindSODataById($scope.SOID);
+      else if($scope.RefId != 0) GetAndBindRecallById($scope.RefId);
     }
 
     function GetAndBindSODataById(id) {
@@ -81,6 +83,24 @@ angular.module('starter')
           APIService.HideLoading();
           console.log(error);
           IonicAlert($ionicPopup,'ไม่พบข้อมูล SO',null);
+        });
+    }
+
+    function GetAndBindRecallById(id) {
+      console.log(id);
+      APIService.ShowLoading();
+      var url = APIService.hostname() + '/SO/GetRecallById';
+      var data = {Id:id};
+      APIService.httpPost(url,data,
+        function(response){
+          if(response != null) BindSOData(response.data);
+          else IonicAlert($ionicPopup,'ไม่พบข้อมูล Recall',null);
+          APIService.HideLoading();
+        },
+        function(error){
+          APIService.HideLoading();
+          console.log(error);
+          IonicAlert($ionicPopup,'ไม่พบข้อมูล Recall',null);
         });
     }
 
@@ -101,22 +121,34 @@ angular.module('starter')
       $scope.saveso.startSignature = data.CustSignStart;
       $scope.saveso.stopSignature = data.CustSignStop;
 
-      $scope.saveso.pca.startDate = GetNewDateByDTEDateFormat(data.PCAStart);
-      $scope.saveso.pca.startTxt = GetStartStopDateTimeTxt($scope.saveso.pca.startDate);
-      $scope.saveso.pca.start = data.PCAStart;
+      if(data.PCAStart && data.PCAStart.length > 0)
+      {
+        $scope.saveso.pca.startDate = GetNewDateByDTEDateFormat(data.PCAStart);
+        $scope.saveso.pca.startTxt = GetStartStopDateTimeTxt($scope.saveso.pca.startDate);
+        $scope.saveso.pca.start = data.PCAStart;
+      }
+      if(data.PCAEnd && data.PCAEnd.length > 0)
+      {
+        $scope.saveso.pca.stopDate = GetNewDateByDTEDateFormat(data.PCAEnd);
+        $scope.saveso.pca.stopTxt = GetStartStopDateTimeTxt($scope.saveso.pca.stopDate);
+        $scope.saveso.pca.stop = data.PCAEnd;  
+      }
       $scope.saveso.pca.totaltime = data.PCATotalMin;
-      $scope.saveso.pca.stopDate = GetNewDateByDTEDateFormat(data.PCAEnd);
-      $scope.saveso.pca.stopTxt = GetStartStopDateTimeTxt($scope.saveso.pca.stopDate);
-      $scope.saveso.pca.stop = data.PCAEnd;
-
-      $scope.saveso.gpu.startDate = GetNewDateByDTEDateFormat(data.GPUStart);
-      $scope.saveso.gpu.startTxt = GetStartStopDateTimeTxt($scope.saveso.gpu.startDate);
-      $scope.saveso.gpu.start = data.GPUStart;
+      
+      if(data.GPUStart && data.GPUStart.length > 0)
+      {
+        $scope.saveso.gpu.startDate = GetNewDateByDTEDateFormat(data.GPUStart);
+        $scope.saveso.gpu.startTxt = GetStartStopDateTimeTxt($scope.saveso.gpu.startDate);
+        $scope.saveso.gpu.start = data.GPUStart;  
+      }
+      if(data.GPUEnd && data.GPUEnd.length > 0)
+      {
+        $scope.saveso.gpu.stopDate = GetNewDateByDTEDateFormat(data.GPUEnd);
+        $scope.saveso.gpu.stopTxt = GetStartStopDateTimeTxt($scope.saveso.gpu.stopDate);
+        $scope.saveso.gpu.stop = data.GPUStop;  
+      }
       $scope.saveso.gpu.totaltime = data.GPUTotalMin;
-      $scope.saveso.gpu.stopDate = GetNewDateByDTEDateFormat(data.GPUEnd);
-      $scope.saveso.gpu.stopTxt = GetStartStopDateTimeTxt($scope.saveso.gpu.stopDate);
-      $scope.saveso.gpu.stop = data.GPUStop;
-
+      
       $scope.saveso.pca.hose1 = data.PCA1;
       $scope.saveso.pca.hose2 = data.PCA2;
       $scope.saveso.gpu.plug1 = data.GPU1;
@@ -165,8 +197,6 @@ angular.module('starter')
       var url;
       if(isTemp) url = APIService.hostname() + '/SO/SaveTempSO';
       else url = APIService.hostname() + '/SO/SaveSO';
-      // if($scope.SOID == 0) url = APIService.hostname() + '/SO/SaveSO';
-      // else url = APIService.hostname() + '/SO/EditSO';
       var data = {
                   Station:$scope.saveso.station, FlightNo:$scope.saveso.flightno, ACType:$scope.saveso.aircrafttype, ACCarrier:$scope.saveso.aircarrier,
                   ACReg:$scope.saveso.aircraftreg, STA:$scope.saveso.aircraftsta, STD:$scope.saveso.aircraftstd, GateNo:$scope.saveso.gateno,
@@ -175,7 +205,7 @@ angular.module('starter')
                   GPUStart:$scope.saveso.gpu.start, GPUStop:$scope.saveso.gpu.stop, GPUTotalTime:$scope.saveso.gpu.totaltime,
                   UserID:$scope.saveso.idno, CustIDStart:$scope.saveso.username, CustSignStart:$scope.saveso.startSignature,
                   CustIDStop:$scope.saveso.username, CustSignStop:$scope.saveso.stopSignature, CondOfCharge:$scope.saveso.condition,
-                  Remark:$scope.saveso.remark, UploadImages:$scope.uploadImgs, Id:$scope.SOID
+                  Remark:$scope.saveso.remark, UploadImages:$scope.uploadImgs, Id:$scope.SOID, RefId: $scope.RefId
                  };
       APIService.httpPost(url,data,function(response){
         APIService.HideLoading();
@@ -225,7 +255,7 @@ angular.module('starter')
           $scope.modalSignature = modal;
           $scope.modalSignature.show();
           InitialSignature();
-          if($scope.SOID != 0){
+          if($scope.SOID != 0 || $scope.RefId != 0){
             if(isStart) signature.fromDataURL($scope.saveso.startSignature);
             else signature.fromDataURL($scope.saveso.stopSignature);      
           }

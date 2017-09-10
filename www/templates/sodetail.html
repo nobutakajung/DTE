@@ -1,0 +1,141 @@
+<ion-view cache-view='false' view-title="รายละเอียด-SO">
+  <ion-content>
+
+  	<div class="list">
+
+  		<!-- Detail -->
+  		<div class="item item-divider">
+  			Detail
+  		</div>
+  		<div class="item">
+  			<h2>Station</h2>
+  			<p>{{station}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>Airline</h2>
+  			<p>{{aircarrier}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>Flight No.</h2>
+  			<p>{{flightno}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>Aircraft Type</h2>
+  			<p>{{aircrafttype}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>Aircraft Reg</h2>
+  			<p>{{aircraftreg}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>Aircraft STA</h2>
+  			<p>{{aircraftstaTxt}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>Aircraft STD</h2>
+  			<p>{{aircraftstdTxt}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>Gate No.</h2>
+  			<p>{{gateno}}</p>
+  		</div>
+  		<div class="item item-body">
+  			<h2>ลายเซ็นต์-Start</h2>
+  			<img src="{{startSignature}}" class="full-image">
+  		</div>
+  		<div class="item item-body">
+  			<h2>ลายเซ็นต์-Stop</h2>
+  			<img src="{{stopSignature}}" class="full-image">
+  		</div>
+
+  		<!-- PCA -->
+  		<div class="item item-divider">
+  			PCA
+  		</div>
+  		<div class="item">
+  			<h2>1 Hose</h2>
+  			<p>{{pca.hose1}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>2 Hose</h2>
+  			<p>{{pca.hose2}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>Start</h2>
+  			<p>{{pca.startTxt}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>Stop</h2>
+  			<p>{{pca.stopTxt}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>TotalTime</h2>
+  			<p>{{pca.totaltime}}</p>
+  		</div>
+
+  		<!-- GPU -->
+		<div class="item item-divider">
+  			GPU
+  		</div>
+  		<div class="item">
+  			<h2>1 Plug</h2>
+  			<p>{{gpu.plug1}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>2 Plug</h2>
+  			<p>{{gpu.plug2}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>Start</h2>
+  			<p>{{gpu.startTxt}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>Stop</h2>
+  			<p>{{gpu.stopTxt}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>TotalTime</h2>
+  			<p>{{gpu.totaltime}}</p>
+  		</div>  		
+
+  		<!-- Operated-By -->
+  		<div class="item item-divider">
+  			Operated By
+  		</div>
+  		<div class="item">
+  			<h2>Id No.</h2>
+  			<p>{{createby}}</p>
+  		</div>
+  		<div class="item">
+  			<h2>Name</h2>
+  			<p>{{createdbyname}}</p>
+  		</div>
+
+  		<!-- Condition -->
+  		<div class="item item-divider">
+  			Condition of Charge
+  		</div>
+  		<div class="item">
+  			<p>{{condition}}</p>
+  		</div>
+
+  		<!-- Remark -->
+  		<div class="item item-divider">
+  			Remark
+  		</div>
+		<div class="item">
+  			<p>{{remark}}</p>
+  		</div>
+
+  		<!-- Upload-Images -->
+  		<div class="item item-divider">
+  			Upload รูปภาพ
+  		</div>
+  		<div class="item item-body" ng-repeat='item in uploadImgs'>
+  			<img src="{{item}}" class="full-image">
+  		</div>
+  		
+  	</div>
+
+  </ion-content>
+</ion-view>

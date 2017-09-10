@@ -67,11 +67,20 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'ion-aut
   })
 
   .state('app.saveoreditso', {
-      url: '/saveoreditso?id',
+      url: '/saveoreditso?refid&id',
       views: {
         'menuContent': {
           templateUrl: 'templates/saveoreditso.html',
           controller: 'SaveOrEditSOCtrl'
+        }
+      }
+    })
+  .state('app.sodetail', {
+      url: '/sodetail?id',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/sodetail.html',
+          controller: 'SODetailSOCtrl'
         }
       }
     })
@@ -83,6 +92,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'ion-aut
         }
       }
     });
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/home');
 });

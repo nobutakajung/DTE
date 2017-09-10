@@ -51,8 +51,9 @@ angular.module('starter')
       };
     }
 
-    $scope.editSO = function(id){
-      $state.go('app.saveoreditso',{id:id});
+    $scope.SODetail = function(id){
+      // $state.go('app.saveoreditso',{id:id});
+      $state.go('app.sodetail',{id:id});
     };
 
     $scope.TimeChange = function(){

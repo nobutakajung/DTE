@@ -111,7 +111,7 @@ function filterFlightDatas(data,query){
 function GetNewDateByDTEDateFormat(inputDate) {
     if(inputDate == null) return null;
     var year = inputDate.substring(0,4);
-    var month = inputDate.substring(4,6);
+    var month = +inputDate.substring(4,6) - 1;
     var day = inputDate.substring(6,8);
     var hour = inputDate.substring(8,10);
     var minute = inputDate.substring(10,12);
