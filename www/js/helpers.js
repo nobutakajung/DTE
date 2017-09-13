@@ -70,11 +70,11 @@ function GetStartStopDateTimeTxt(currentdate) {
 function DiffStartStopDate(startDate, stopDate, elemId) {
     if (startDate == null || stopDate == null) return;
 
-    // startDate = new Date(startDate);
-    // stopDate = new Date(stopDate);
+    startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDay(), startDate.getHours(), startDate.getMinutes(), 0);
+    stopDate = new Date(stopDate.getFullYear(), stopDate.getMonth(), stopDate.getDay(), stopDate.getHours(), stopDate.getMinutes(), 0);
 
     var diff = (stopDate - startDate);
-    var diffMins = Math.round(diff / 60000);
+    var diffMins = Math.abs(Math.round(diff / 60000));
     return diffMins;
 }
 
