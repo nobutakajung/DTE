@@ -70,25 +70,41 @@ angular.module('starter')
 
     }
 
+    window.broadcaster.addEventListener( "DatecsPrinter.connectionStatus", function(e) {
+      console.log(e);
+      if (e.isConnected) {
+        console.log('printer-connected');
+      }
+    });
 
     $scope.printSO = function(){
+      APIService.ShowLoading();
       document.addEventListener('deviceready', function () {
 
         window.DatecsPrinter.listBluetoothDevices(
           function (devices) {
-            console.log(devices);
+            var deviceIndex = 0;
+            for (var i = 0; i <= devices.length - 1; i++) {
+              if(devices[i].name == 'MTP-II') {
+                deviceIndex = i;
+                break;
+              }
+            };
             //connect printer
-            window.DatecsPrinter.connect(devices[0].address, 
+            window.DatecsPrinter.connect(devices[deviceIndex].address, 
               function() {
                 //print
                 printSODetails();
+                APIService.HideLoading();
               },
               function() {
+                APIService.HideLoading();
                 alert('ไม่สามารเชื่อมต่อกับ printer ได้');
               }
             );
           },
           function (error) {
+            APIService.HideLoading();
             alert('ไม่พบ printer');
           }
         );
