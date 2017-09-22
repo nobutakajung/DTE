@@ -5,12 +5,13 @@ angular.module('starter')
     $scope.allDatas = [];
     $scope.transactions = [];
     $scope.userId = window.localStorage.getItem('UserId');
+    $scope.station = window.localStorage.getItem('Station');
     $scope.search = {SearchDate : ''};
 
     function InitialListSO(){
       APIService.ShowLoading();
       var url = APIService.hostname() + '/SO/GetSO';
-      var data = {UserId:+$scope.userId};
+      var data = {Station:$scope.station};
       APIService.httpPost(url,data,
         function(response){
           APIService.HideLoading();

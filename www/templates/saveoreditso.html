@@ -86,7 +86,7 @@
 	  	</label>
 	</div>
 
-	<div class='list card'>
+	<div class='list card' ng-hide='SOID == 0 && RefId == 0'>
 		<label class="item item-input">
 	    	<span class="input-label">ลายเซ็นต์-Stop</span>
 	    	<button type='button' ng-click='OpenModalSignature(false)' class='button button-balanced'>Stop</button>
@@ -108,11 +108,16 @@
 			2 Hose
 		</ion-item>
 		<label ng-show="saveso.startSignature && saveso.startSignature.length > 0" class="item item-input">
-		    <span class="input-label"><button ng-click='stampStartDateTime(true)' class='button button-assertive'>Start</button></span>
+		    <span class="input-label">
+		    	<button ng-click='stampStartDateTime(true)' ng-show='SOID == 0 && RefId == 0' class='button button-assertive'>Start</button>
+		    	<span ng-hide='SOID == 0 && RefId == 0'>Start</span>
+		    </span>
 		    <span>{{saveso.pca.startTxt}}</span>
 	  	</label>
 	  	<label ng-show="saveso.stopSignature && saveso.stopSignature.length > 0" class="item item-input">
-		    <span class="input-label"><button ng-disabled='!saveso.pca.start || saveso.pca.start.length <= 0' ng-click='stampStopDateTime(true)' class='button button-assertive'>Stop</button></span>
+		    <span class="input-label">
+		    	<button ng-disabled='!saveso.pca.start || saveso.pca.start.length <= 0' ng-click='stampStopDateTime(true)' class='button button-assertive'>Stop</button>
+		    </span>
 		    <span>{{saveso.pca.stopTxt}}</span>
 	  	</label>
 	  	<label class="item item-input">
@@ -134,7 +139,10 @@
 			2 Plug
 		</ion-item>
 		<label ng-show="saveso.startSignature && saveso.startSignature.length > 0" class="item item-input">
-		    <span class="input-label"><button ng-click='stampStartDateTime(false)' class='button button-assertive'>Start</button></span>
+		    <span class="input-label">
+		    	<button ng-click='stampStartDateTime(false)' ng-show='SOID == 0 && RefId == 0' class='button button-assertive'>Start</button>
+		    	<span ng-hide='SOID == 0 && RefId == 0'>Start</span>
+		    </span>
 		    <span>{{saveso.gpu.startTxt}}</span>
 	  	</label>
 	  	<label ng-show="saveso.stopSignature && saveso.stopSignature.length > 0" class="item item-input">
@@ -160,14 +168,14 @@
 	</div>
 
 	<div class='list card'>
-		<h4 class='subject'>Condition of Charge</h4>
+		<h4 class='subject'>Remark ผู้เปิดใบงาน</h4>
 		<label class='item item-input padding'>
 			<textarea ng-model='saveso.condition'></textarea>
 		</label>
 	</div>
 
-	<div class='list card'>
-		<h4 class='subject'>Remark</h4>
+	<div class='list card' ng-hide='SOID == 0 && RefId == 0'>
+		<h4 class='subject'>Remark ผู้ปิดใบงาน</h4>
 		<label class='item item-input padding'>
 			<textarea ng-model='saveso.remark'></textarea>
 		</label>

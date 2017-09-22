@@ -29,6 +29,7 @@ angular.module('starter')
       if(data == null) return;
       $scope.Transaction = data;
 
+      $scope.WONumber = data.WONumber;
       $scope.station = data.Station;
       $scope.aircarrier = data.AircraftCarrier;
       $scope.flightno = data.FlightNo;
@@ -75,6 +76,7 @@ angular.module('starter')
 
         window.DatecsPrinter.listBluetoothDevices(
           function (devices) {
+            console.log(devices);
             //connect printer
             window.DatecsPrinter.connect(devices[0].address, 
               function() {
@@ -82,12 +84,12 @@ angular.module('starter')
                 printSODetails();
               },
               function() {
-                alert(JSON.stringify(error));
+                alert('ไม่สามารเชื่อมต่อกับ printer ได้');
               }
             );
           },
           function (error) {
-            alert(JSON.stringify(error));
+            alert('ไม่พบ printer');
           }
         );
 

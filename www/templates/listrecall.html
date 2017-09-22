@@ -1,4 +1,4 @@
-<ion-view cache-view='false' view-title="รายการ-Recall">
+<ion-view cache-view='false' view-title="รายการ-ปิดใบงาน">
   <ion-content>
 
   	<div class="bar bar-header item-input-inset">
@@ -17,6 +17,7 @@
 				<p>STA: {{convertDateTimeFormat(item.ETA)}}</p>
 				<p>STD: {{convertDateTimeFormat(item.ETD)}}</p>
 				<p>CreateDate: {{item.CreatedDateTxt}}</p>
+				<img src="{{item.Logo}}" width='150' height='50'>
     		</div>
 			<button class='button button-assertive' ng-click='DeleteRecall(item.id)'>
 				<i class='icon ion-trash-a'></i>

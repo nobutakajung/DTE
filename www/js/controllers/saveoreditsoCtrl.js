@@ -9,7 +9,8 @@ angular.module('starter')
     $scope.RefId = $stateParams.refid;
     $scope.SOID = $stateParams.id;
     $scope.EditTransaction;
-    $scope.title = $scope.SOID == 0 ? 'บันทึก' : 'แก้ไข';
+    if($scope.RefId != 0) $scope.title = 'ปิดใบงาน';
+    else $scope.title = 'เปิดใบงาน';
 
     //AutoComplete//
     function GetFlightDatas(){
@@ -316,12 +317,10 @@ angular.module('starter')
 
     $scope.UploadImage = function(){
       var options = { 
-                     destinationType: Camera.DestinationType.DATA_URL,
-                     sourceType: Camera.PictureSourceType.CAMERA,
-                     encodingType: Camera.EncodingType.JPEG,
-                     targetWidth: 100,
-                     targetHeight: 100,
-                    };
+                   destinationType: Camera.DestinationType.DATA_URL,
+                   sourceType: Camera.PictureSourceType.CAMERA,
+                   encodingType: Camera.EncodingType.JPEG
+                  };  
       $cordovaCamera.getPicture(options).then(function(imageData) {
         $scope.uploadImgs.push("data:image/jpeg;base64," + imageData);
       }, function(err) {
