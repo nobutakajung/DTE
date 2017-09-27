@@ -450,6 +450,15 @@ angular.module('starter')
     }
 
     function CheckValidate(){
+      if($scope.RefId != 0){
+        console.log($scope.saveso.pca.stop);
+        console.log($scope.saveso.gpu.stop);
+        if($scope.saveso.pca.stop == null || !$scope.saveso.pca.stop || $scope.saveso.gpu.stop == null || !$scope.saveso.gpu.stop) {
+          alert('ต้องกด Stop ก่อน');
+          return false;
+        }
+      }
+
       var flag = true;
       //air carrier
       if($scope.saveso.aircarrier == null || !$scope.saveso.aircarrier || $scope.saveso.aircarrier.length == 0) flag = false;

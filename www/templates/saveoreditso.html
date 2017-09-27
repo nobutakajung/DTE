@@ -109,7 +109,7 @@
 		</ion-item>
 		<label ng-show="saveso.startSignature && saveso.startSignature.length > 0" class="item item-input">
 		    <span class="input-label">
-		    	<button ng-click='stampStartDateTime(true)' ng-show='SOID == 0 && RefId == 0' class='button button-assertive'>Start</button>
+		    	<button ng-click='stampStartDateTime(true)' ng-disabled='SOID != 0 || RefId != 0' ng-show='SOID == 0 && RefId == 0' class='button button-assertive'>Start</button>
 		    	<span ng-hide='SOID == 0 && RefId == 0'>Start</span>
 		    </span>
 		    <span>{{saveso.pca.startTxt}}</span>
@@ -140,7 +140,7 @@
 		</ion-item>
 		<label ng-show="saveso.startSignature && saveso.startSignature.length > 0" class="item item-input">
 		    <span class="input-label">
-		    	<button ng-click='stampStartDateTime(false)' ng-show='SOID == 0 && RefId == 0' class='button button-assertive'>Start</button>
+		    	<button ng-click='stampStartDateTime(false)' ng-disabled='SOID != 0 || RefId != 0' ng-show='SOID == 0 && RefId == 0' class='button button-assertive'>Start</button>
 		    	<span ng-hide='SOID == 0 && RefId == 0'>Start</span>
 		    </span>
 		    <span>{{saveso.gpu.startTxt}}</span>

@@ -35,8 +35,8 @@ angular.module('starter')
       $scope.flightno = data.FlightNo;
       $scope.aircrafttype = data.AircraftType;
       $scope.aircraftreg = data.AircraftReg;
-      $scope.aircraftstaTxt = GetNewDateByDTEDateFormat(data.ETA);
-      $scope.aircraftstdTxt = GetNewDateByDTEDateFormat(data.ETD);
+      $scope.aircraftstaTxt = GetNewDateByDTEDateFormat(data.ETA).datetimeslashformat();
+      $scope.aircraftstdTxt = GetNewDateByDTEDateFormat(data.ETD).datetimeslashformat();
       $scope.gateno = data.GateNo;
       $scope.startSignature = data.CustSignStart;
       $scope.stopSignature = data.CustSignStop;
@@ -123,18 +123,36 @@ angular.module('starter')
       text = text.concat("{b}Aircraft STA: {/b} " + GetTimeFormatFromDateFormat($scope.Transaction.ETA) + "{br}");
       text = text.concat("{b}Aircraft STD: {/b} " + GetTimeFormatFromDateFormat($scope.Transaction.ETD) + "{br}");
       text = text.concat("{b}Gate No: {/b} " + $scope.Transaction.GateNo + "{br}");
-      text = text.concat("{b}PCA1: {/b} " + (($scope.Transaction.PCA1) ? "True" : "False") + ", ");
-      text = text.concat("{b}PCA2: {/b} " + (($scope.Transaction.PCA2) ? "True" : "False") + "{br}");
+      text = text.concat("{b}PCA1: {/b} " + (($scope.Transaction.PCA1) ? "/" : "X") + ", ");
+      text = text.concat("{b}PCA2: {/b} " + (($scope.Transaction.PCA2) ? "/" : "X") + "{br}");
 
-      text = text.concat("{b}PCAStart: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.PCAStart)) + "{br}");
-      text = text.concat("{b}PCAStop: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.PCAEnd)) + "{br}");
+      // text = text.concat("{b}PCAStart: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.PCAStart)) + "{br}");
+      if($scope.Transaction.PCAStart && $scope.Transaction.PCAStart.length > 0)
+        text = text.concat("{b}PCAStart: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.PCAStart)) + "{br}");
+      else
+        text = text.concat("{b}PCAStart: {/b} " + "-" + "{br}");
+      if($scope.Transaction.PCAEnd && $scope.Transaction.PCAEnd.length > 0) 
+        text = text.concat("{b}PCAStop: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.PCAEnd)) + "{br}");
+      else 
+        text = text.concat("{b}PCAStop: {/b} " + "-" + "{br}"); 
+      // text = text.concat("{b}PCAStop: {/b} " + (($scope.Transaction.PCAEnd && $scope.Transaction.PCAEnd.length > 0) ? GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.PCAEnd)) : '-' + "{br}");
+
       text = text.concat("{b}PCATotalMin: {/b} " + $scope.Transaction.PCATotalMin + "{br}");
 
-      text = text.concat("{b}GPU1: {/b} " + (($scope.Transaction.GPU1) ? "True" : "False") + ", ");
-      text = text.concat("{b}GPU2: {/b} " + (($scope.Transaction.GPU2) ? "True" : "False") + "{br}");
+      text = text.concat("{b}GPU1: {/b} " + (($scope.Transaction.GPU1) ? "/" : "X") + ", ");
+      text = text.concat("{b}GPU2: {/b} " + (($scope.Transaction.GPU2) ? "/" : "X") + "{br}");
 
-      text = text.concat("{b}GPUStart: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.GPUStart)) + "{br}");
-      text = text.concat("{b}GPUStop: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.GPUEnd)) + "{br}");
+      // text = text.concat("{b}GPUStart: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.GPUStart)) + "{br}");
+      if($scope.Transaction.GPUStart && $scope.Transaction.GPUStart.length > 0)
+        text = text.concat("{b}GPUStart: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.GPUStart)) + "{br}");
+      else
+        text = text.concat("{b}GPUStart: {/b} " + "-" + "{br}");
+      if($scope.Transaction.GPUEnd && $scope.Transaction.GPUEnd.length > 0)
+        text = text.concat("{b}GPUStop: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.GPUEnd)) + '{br}');
+      else
+        text = text.concat("{b}GPUStop: {/b} " + '-' + '{br}');
+
+      // text = text.concat("{b}GPUStop: {/b} " + ($scope.Transaction.GPUEnd && $scope.Transaction.GPUEnd.length > 0) ? GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.GPUEnd)) : '-' + "{br}";
       text = text.concat("{b}GPUTotalMin: {/b} " + $scope.Transaction.GPUTotalMin + "{br}");
 
       text = text.concat("{b}Cond: {/b} " + $scope.Transaction.CondOfCharge + "{br}");
@@ -153,12 +171,14 @@ angular.module('starter')
     function PrintSOSignatures() {
       window.DatecsPrinter.printText("{b}Start-Signature{/b}{br}", 'ISO-8859-1', 
         function() {
+          if($scope.Transaction.CustSignStart == null || !$scope.Transaction.CustSignStart || $scope.Transaction.CustSignStart.length <= 0) return;
           //start signature
           window.DatecsPrinter.printImage(
               $scope.Transaction.CustSignStart.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""), 280, 150, 0, 
               function() {
                 window.DatecsPrinter.printText("{b}Stop-Signature{/b}{br}", 'ISO-8859-1', 
                   function() {
+                    if($scope.Transaction.CustSignStop == null || !$scope.Transaction.CustSignStop || $scope.Transaction.CustSignStop.length <= 0) return;
                     //stop signature
                     window.DatecsPrinter.printImage(
                         $scope.Transaction.CustSignStop.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""), 280, 150, 0, 
