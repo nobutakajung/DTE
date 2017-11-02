@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('SaveOrEditSOCtrl', function($scope, $ionicModal, APIService, $ionicPopup, $ionicPlatform, $cordovaCamera, FlightDataSQLite, $ionicHistory, $state, $stateParams, $cordovaPrinter) {
+.controller('SaveOrEditSOCtrl', function($scope, $ionicModal, APIService, $ionicPopup, $ionicPlatform, $cordovaCamera, FlightDataSQLite, $ionicHistory, $state, $stateParams, $cordovaPrinter, $q) {
 
   $ionicPlatform.ready(function() {
 
@@ -481,7 +481,10 @@ angular.module('starter')
     }
 
     $scope.loadFlightData = function(){
-      LoadFlightData(null, FlightDataSQLite, APIService);  
+      LoadFlightData(null, FlightDataSQLite, APIService, $q).then(function(){
+        //initial autocomplete again
+        GetFlightDatas();  
+      });
     };
 
   });

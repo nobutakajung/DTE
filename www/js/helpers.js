@@ -146,31 +146,42 @@ function InitialFlightDataProcess(APIService, $q, FlightDataSQLite) {
     });
 }
 
-function LoadFlightData(sequence, FlightDataSQLite, APIService) {
+function LoadFlightData(sequence, FlightDataSQLite, APIService, $q) {
     //delete recent data
-    FlightDataSQLite.DeleteAll().then(function(){
-        GetFlightData(sequence, FlightDataSQLite, APIService);
-    }); 
+    return $q(function(resolve){
+        FlightDataSQLite.DeleteAll().then(function(){
+            GetFlightData(sequence, FlightDataSQLite, APIService, $q).then(function(){
+                return resolve();
+            },function(){return resolve();});
+        });     
+    });
 }
 
-function GetFlightData(sequence, FlightDataSQLite, APIService){
-    //get new datas(for today)  
-    APIService.ShowLoading();
-    var url = APIService.hostname() + '/SO/GetFlightData';
-    var data = {FlightDate:GetStartStopDateTimeValue(new Date()).substring(0,8)}
-    APIService.httpPost(url,data,
-    function(response){
-      if(response != null && response.data.length > 0){
-        FlightDataSQLite.Add(response.data).then(function(){
+function GetFlightData(sequence, FlightDataSQLite, APIService, $q){
+    //get new datas(for today)
+    return $q(function(resolve){
+        APIService.ShowLoading();
+        var url = APIService.hostname() + '/SO/GetFlightData';
+        var data = {FlightDate:GetStartStopDateTimeValue(new Date()).substring(0,8)}
+        APIService.httpPost(url,data,
+        function(response){
+          if(response != null && response.data.length > 0){
+            FlightDataSQLite.Add(response.data).then(function(){
+              APIService.HideLoading();
+              //keep current sequence in device
+              if(sequence != null) window.localStorage.setItem('sequenceNo',sequence);
+              return resolve();
+            });
+          }
+          else {
+            APIService.HideLoading();
+            return resolve();
+          } 
+        },
+        function(error){
           APIService.HideLoading();
-          //keep current sequence in device
-          if(sequence != null) window.localStorage.setItem('sequenceNo',sequence);
-        });
-      }
-      else APIService.HideLoading();
-    },
-    function(error){
-      APIService.HideLoading();
-      console.log(error);
-    })
+          console.log(error);
+          return resolve();
+        })    
+    });  
 }

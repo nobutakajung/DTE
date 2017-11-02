@@ -35,7 +35,7 @@ angular.module('starter.controllers', [])
         } 
         else IonicAlert($ionicPopup,"username/password ผิด",null);
       },
-      function(response){IonicAlert($ionicPopup,"username/password ผิด",null);});
+      function(error){IonicAlert($ionicPopup, error, null);});
   };
 
   $scope.logout = function(){
@@ -44,6 +44,8 @@ angular.module('starter.controllers', [])
     $ionicHistory.nextViewOptions({
       disableBack: true
     });
+    $scope.loginData.username = '';
+    $scope.loginData.password = '';
     window.location = '#/app/home';
   }
 
