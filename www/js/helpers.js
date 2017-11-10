@@ -142,7 +142,7 @@ function CheckSequenceIsEqual(sequence){
 function InitialFlightDataProcess(APIService, $q, FlightDataSQLite) {
     GetSequence(APIService, $q).then(function(sequence){
         if(sequence == null) return;
-        if(!CheckSequenceIsEqual(sequence)) LoadFlightData(sequence, FlightDataSQLite, APIService);      
+        if(!CheckSequenceIsEqual(sequence)) LoadFlightData(sequence, FlightDataSQLite, APIService, $q);      
     });
 }
 
