@@ -157,9 +157,8 @@ angular.module('starter')
             //connect printer
             window.DatecsPrinter.connect(devices[deviceIndex].address, 
               function() {
-                TestPrintImg();
-                // //print
-                // printSODetails();
+                //print
+                printSODetails();
                 APIService.HideLoading();
               },
               function() {
@@ -228,7 +227,7 @@ angular.module('starter')
       window.DatecsPrinter.printText(text, 'ISO-8859-1', 
         function() {
           //printMyImage();
-          PrintSOSignatures();
+          // PrintSOSignatures();
         }
       );
     }
