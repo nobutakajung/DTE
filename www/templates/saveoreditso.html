@@ -35,6 +35,10 @@
 		    <span class="input-label">Station</span>
 		    <input type="text" ng-model='saveso.station'>
 	  	</label>
+	  	<label class="item item-input" ng-show='AirlineLogo && AirlineLogo.length > 0'>
+	  		<span class="input-label">Logo Airline</span>
+		    <img src="{{AirlineLogo}}" class='full-image' style='width:60% !important' >
+	  	</label>
 	  	<label class="item item-input">
 		    <span class="input-label">Airline</span>
 		    <input type="text" ng-model='saveso.aircarrier'>
@@ -79,7 +83,7 @@
 	  	</label>
 	</div>
 
-	<div class='list card'>
+	<div class='list card' ng-hide='RefId != 0'>
 		<label class="item item-input">
 	    	<span class="input-label">ลายเซ็นต์-Start</span>
 	    	<button type='button' ng-click='OpenModalSignature(true)' class='button button-balanced'>Start</button>
@@ -97,13 +101,13 @@
 		<h4 class='subject'>PCA</h4>
 		<ion-item class='item item-checkbox'>
 			<label class='checkbox'>
-				<input type='checkbox' ng-model='saveso.pca.hose1' />
+				<input type='checkbox' ng-disabled='RefId != 0' ng-model='saveso.pca.hose1' />
 			</label>
 			1 Hose
 		</ion-item>
 		<ion-item class='item item-checkbox'>
 			<label class='checkbox'>
-				<input type='checkbox' ng-model='saveso.pca.hose2' />
+				<input type='checkbox' ng-disabled='RefId != 0' ng-model='saveso.pca.hose2' />
 			</label>
 			2 Hose
 		</ion-item>
@@ -128,13 +132,13 @@
 	  	<h4 class='subject'>GPU</h4>
 		<ion-item class='item item-checkbox'>
 			<label class='checkbox'>
-				<input type='checkbox' ng-model='saveso.gpu.plug1' />
+				<input type='checkbox' ng-disabled='RefId != 0' ng-model='saveso.gpu.plug1' />
 			</label>
 			1 Plug
 		</ion-item>
 		<ion-item class='item item-checkbox'>
 			<label class='checkbox'>
-				<input type='checkbox' ng-model='saveso.gpu.plug2' />
+				<input type='checkbox' ng-disabled='RefId != 0' ng-model='saveso.gpu.plug2' />
 			</label>
 			2 Plug
 		</ion-item>
@@ -170,7 +174,7 @@
 	<div class='list card'>
 		<h4 class='subject'>Remark ผู้เปิดใบงาน</h4>
 		<label class='item item-input padding'>
-			<textarea ng-model='saveso.condition'></textarea>
+			<textarea ng-disabled='RefId != 0' ng-model='saveso.condition'></textarea>
 		</label>
 	</div>
 

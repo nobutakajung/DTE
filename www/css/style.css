@@ -31,3 +31,26 @@ input[type="text"], input[type="password"], .divautocomplete, .timepickerVal{
 	height:34px;
 	padding-top: 5px;
 }
+
+.dte-header{
+	background-color:#de0606;
+	color:white;
+	padding: 20px 0px 20px 10px;
+	font-size: 23px;
+}
+
+.dte-logo{
+	padding: 0px 40px 0px 40px;
+}
+
+.login-input{
+	margin-right: 20% !important;
+	background-color: white !important;
+	border: 1px solid #fb0000 !important;
+}
+
+.login-btn{
+	width:60%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}

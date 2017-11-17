@@ -84,6 +84,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'ion-aut
         }
       }
     })
+  .state('app.changepassword', {
+      url: '/changepassword',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/changepassword.html',
+          controller: 'ChangePasswordCtrl'
+        }
+      }
+    })
     .state('app.home', {
       url: '/home',
       views: {

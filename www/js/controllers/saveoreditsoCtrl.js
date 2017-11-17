@@ -9,6 +9,7 @@ angular.module('starter')
     $scope.RefId = $stateParams.refid;
     $scope.SOID = $stateParams.id;
     $scope.EditTransaction;
+    $scope.AirlineLogo = '';
     if($scope.RefId != 0) $scope.title = 'ปิดใบงาน';
     else $scope.title = 'เปิดใบงาน';
 
@@ -48,6 +49,10 @@ angular.module('starter')
       $scope.saveso.aircraftstaTxt = GetNewDateByDTEDateFormat(data.STAValueTxt);
       $scope.saveso.aircraftstd = data.STDValueTxt;
       $scope.saveso.aircraftstdTxt = GetNewDateByDTEDateFormat(data.STDValueTxt);
+
+      //get airline logo
+      GetAirlineLogo(data.ACCarrier);
+
     };
 
     $scope.itemsRemoved = function(item){
@@ -68,6 +73,23 @@ angular.module('starter')
       //check come from listrecall or listso
       if($scope.SOID != 0) GetAndBindSODataById($scope.SOID);
       else if($scope.RefId != 0) GetAndBindRecallById($scope.RefId);
+    }
+
+    function GetAirlineLogo(ACCarrier) {
+      APIService.ShowLoading();
+      var url = APIService.hostname() + '/SO/GetAirlineLogo';
+      var data = {ACCarrier:ACCarrier};
+      APIService.httpPost(url,data,
+        function(response){
+          if(response != null) $scope.AirlineLogo = 'data:image/jpg;base64,' + response.data;
+          else IonicAlert($ionicPopup,'ไม่พบ Airline-Logo',null);
+          APIService.HideLoading();
+        },
+        function(error){
+          APIService.HideLoading();
+          console.log(error);
+          IonicAlert($ionicPopup,'เกิดข้อผิดพลาดขณะหา Airline-Logo',null);
+        });
     }
 
     function GetAndBindSODataById(id) {
@@ -193,6 +215,7 @@ angular.module('starter')
     }
 
     $scope.doSaveOrEditSO = function(isTemp){
+      if(!confirm( isTemp ? 'ต้องการปิดใบงาน ?' : 'ต้องการเปิดใบงาน ?' )) return;
       if(!CheckValidate()) return;
       APIService.ShowLoading();
       var url;
@@ -215,12 +238,15 @@ angular.module('starter')
           var message;
           if(isTemp) message = "บันทึกรายการชั่วคราวเรียบร้อย";
           else message = "บันทึกรายการเรียบร้อย : " + response.data.message;
-          IonicAlert($ionicPopup, message, function(){
-            $ionicHistory.nextViewOptions({
-              disableBack: true
-            });
-            $state.go('app.home');
-          });
+          if($scope.RefId != 0)
+          {
+            //get transaction id after save transaction completed
+            APIService.httpPost(APIService.hostname() + '/SO/GetSOIdByWONumber',{WONumber: response.data.message},function(response){
+              if(response.data == 0) RedirecToHomePage(message)
+              else RedirectToSODetailPage(message,response.data);
+            }, function(){});
+          }
+          else RedirecToHomePage(message)
         }
         else{
           //not success
@@ -229,6 +255,26 @@ angular.module('starter')
       },function(error){
         APIService.HideLoading();
       })
+    }
+
+    function RedirecToHomePage (message) {
+      //redirect to home page
+      IonicAlert($ionicPopup, message, function(){
+        $ionicHistory.nextViewOptions({
+          disableBack: true
+        });
+        $state.go('app.home');
+      });
+    }
+
+    function RedirectToSODetailPage(message, soID){
+      //redirect to so detail
+      IonicAlert($ionicPopup, message, function(){
+        $ionicHistory.nextViewOptions({
+          disableBack: true
+        });
+        $state.go('app.sodetail', {id: soID});
+      });
     }
 
     $scope.removeUploadImg = function(index){
