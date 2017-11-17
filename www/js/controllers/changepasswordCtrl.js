@@ -12,7 +12,7 @@ angular.module('starter')
       //todo post to change password
       APIService.ShowLoading();
       var url = APIService.hostname() + '/SO/ChangePassword';
-      var data = {UserId: window.localStorage.getItem('UserId'), OldPassword: $scope.changePassword.oldpassword, NewPassword: $scope.changePassword.newpassword};
+      var data = {UserId: GetUserId(), OldPassword: $scope.changePassword.oldpassword, NewPassword: $scope.changePassword.newpassword};
       APIService.httpPost(url,data,
         function(response){
           console.log(response);

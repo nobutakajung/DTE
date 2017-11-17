@@ -186,11 +186,11 @@ angular.module('starter')
 
     $scope.createTime = GetStartStopDateTimeTxt(new Date());
 
-    $scope.saveso = {station:window.localStorage.getItem('Station'), aircarrier:'', flightno:'', aircrafttype:'', aircraftreg:'',
+    $scope.saveso = {station: GetUserStation(), aircarrier:'', flightno:'', aircrafttype:'', aircraftreg:'',
                      aircraftsta:'', aircraftstaTxt:'', aircraftstd:'', aircraftstdTxt:'', gateno:'', system:'PCA', 
                      pca:{hose1:true,hose2:false, startTxt:'', start:'', startDate:'', stopTxt:'', stopDate:'', stop:'',totaltime:''},
                      gpu:{plug1:true,plug2:false, startTxt:'', start:'', startDate:'', stopTxt:'', stopDate:'', stop:'',totaltime:''},
-                     idno:window.localStorage.getItem('UserId'),username:window.localStorage.getItem('UserName'), startSignature:'', 
+                     idno: GetUserId(), username: GetUserName(), startSignature:'', 
                      stopSignature:'', condition:'', remark:''
                     };
 

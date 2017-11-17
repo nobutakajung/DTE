@@ -2,7 +2,7 @@ angular.module('starter')
 
 .controller('SODetailSOCtrl', function($scope, $ionicModal, APIService, $ionicPopup, $ionicPlatform, $stateParams) {
   $ionicPlatform.ready(function() {
-    $scope.userId = window.localStorage.getItem('UserId');
+    $scope.userId = GetUserId();
     
     $scope.SOID = $stateParams.id;
     $scope.Transaction;

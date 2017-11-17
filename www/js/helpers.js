@@ -185,3 +185,15 @@ function GetFlightData(sequence, FlightDataSQLite, APIService, $q){
         })    
     });  
 }
+
+function GetUserId() {
+    return window.localStorage.getItem('UserId');
+}
+
+function GetUserName() {
+    return window.localStorage.getItem('UserName');
+}
+
+function GetUserStation() {
+    return window.localStorage.getItem('Station');
+}

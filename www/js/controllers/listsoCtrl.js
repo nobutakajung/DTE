@@ -4,8 +4,8 @@ angular.module('starter')
   $ionicPlatform.ready(function() {
     $scope.allDatas = [];
     $scope.transactions = [];
-    $scope.userId = window.localStorage.getItem('UserId');
-    $scope.station = window.localStorage.getItem('Station');
+    $scope.userId = GetUserId();
+    $scope.station = GetUserStation();
     $scope.search = {SearchDate : ''};
 
     function InitialListSO(){
