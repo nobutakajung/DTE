@@ -215,7 +215,7 @@ angular.module('starter')
     }
 
     $scope.doSaveOrEditSO = function(isTemp){
-      if(!confirm( isTemp ? 'ต้องการปิดใบงาน ?' : 'ต้องการเปิดใบงาน ?' )) return;
+      if(!confirm( $scope.RefId != 0 ? 'ต้องการปิดใบงาน ?' : isTemp ? 'ต้องการบันทึกชั่วคราว ?' : 'ต้องการเปิดใบงาน ?' )) return;
       if(!CheckValidate()) return;
       APIService.ShowLoading();
       var url;

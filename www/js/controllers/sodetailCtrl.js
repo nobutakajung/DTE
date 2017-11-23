@@ -178,7 +178,7 @@ angular.module('starter')
 
     function printSODetails() {
       var text;
-      text = "{b}WONumber: {/b} " + $scope.Transaction.WONumber + "{br}";
+      text = "{b}S/O Number: {/b} " + $scope.Transaction.WONumber + "{br}";
       text = text.concat("{b}Station: {/b} " + $scope.Transaction.Station + "{br}");
       text = text.concat("{b}Air Carrier: {/b} " + $scope.Transaction.AircraftCarrier + "{br}");
       text = text.concat("{b}Flightn No: {/b} " + $scope.Transaction.FlightNo + "{br}");
@@ -201,7 +201,7 @@ angular.module('starter')
         text = text.concat("{b}PCAStop: {/b} " + "-" + "{br}"); 
       // text = text.concat("{b}PCAStop: {/b} " + (($scope.Transaction.PCAEnd && $scope.Transaction.PCAEnd.length > 0) ? GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.PCAEnd)) : '-' + "{br}");
 
-      text = text.concat("{b}PCATotalMin: {/b} " + $scope.Transaction.PCATotalMin + "{br}");
+      text = text.concat("{b}PCA-Total Time (Min): {/b} " + $scope.Transaction.PCATotalMin + "{br}");
 
       text = text.concat("{b}GPU1: {/b} " + (($scope.Transaction.GPU1) ? "/" : "X") + ", ");
       text = text.concat("{b}GPU2: {/b} " + (($scope.Transaction.GPU2) ? "/" : "X") + "{br}");
@@ -217,12 +217,14 @@ angular.module('starter')
         text = text.concat("{b}GPUStop: {/b} " + '-' + '{br}');
 
       // text = text.concat("{b}GPUStop: {/b} " + ($scope.Transaction.GPUEnd && $scope.Transaction.GPUEnd.length > 0) ? GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.GPUEnd)) : '-' + "{br}";
-      text = text.concat("{b}GPUTotalMin: {/b} " + $scope.Transaction.GPUTotalMin + "{br}");
+      text = text.concat("{b}GPU-Total Time (Min): {/b} " + $scope.Transaction.GPUTotalMin + "{br}");
 
       text = text.concat("{b}Cond: {/b} " + $scope.Transaction.CondOfCharge + "{br}");
       text = text.concat("{b}Remark: {/b} " + ($scope.Transaction.Remark == null ? '-' : $scope.Transaction.Remark) + "{br}");
       text = text.concat("{b}CreatedBy: {/b} " + $scope.Transaction.CreatedByName + "{br}");
       text = text.concat("{b}UpdatedBy: {/b} " + ($scope.Transaction.UpdatedByName == null ? '-' : $scope.Transaction.UpdatedByName) + "{br}");
+      text = text.concat("{b}Airline: {/b}__________________{br}");
+      text = text.concat("{b}Staff: {/b}__________________{br}");
 
       window.DatecsPrinter.printText(text, 'ISO-8859-1', 
         function() {

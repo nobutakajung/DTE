@@ -44,7 +44,7 @@ input[type="text"], input[type="password"], .divautocomplete, .timepickerVal{
 }
 
 .login-input{
-	margin-right: 20% !important;
+	margin-right: 5% !important;
 	background-color: white !important;
 	border: 1px solid #fb0000 !important;
 }
@@ -53,4 +53,8 @@ input[type="text"], input[type="password"], .divautocomplete, .timepickerVal{
 	width:60%;
 	margin-top: 20px;
 	margin-bottom: 10px;
+}
+
+.marginleft-5{
+	margin-left: 8%;
 }
