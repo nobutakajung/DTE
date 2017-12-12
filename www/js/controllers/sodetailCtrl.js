@@ -177,55 +177,64 @@ angular.module('starter')
     }
 
     function printSODetails() {
-      var text;
-      text = "{b}S/O Number: {/b} " + $scope.Transaction.WONumber + "{br}";
-      text = text.concat("{b}Station: {/b} " + $scope.Transaction.Station + "{br}");
-      text = text.concat("{b}Air Carrier: {/b} " + $scope.Transaction.AircraftCarrier + "{br}");
-      text = text.concat("{b}Flightn No: {/b} " + $scope.Transaction.FlightNo + "{br}");
-      text = text.concat("{b}Aircraft Type: {/b} " + $scope.Transaction.AircraftType + "{br}");
+
+      var text = "{br}";
+
+      if($scope.Transaction.PCAStart && $scope.Transaction.PCAStart.length > 0)
+        text = text.concat("{b}Date of service: {/b}" + GetDateFormatFromDateFormat($scope.Transaction.PCAStart) + "{br}");
+      else if($scope.Transaction.GPUStart && $scope.Transaction.GPUStart.length > 0) 
+        text = text.concat("{b}Date of service: {/b}" + GetDateFormatFromDateFormat($scope.Transaction.GPUStart) + "{br}");
+      else 
+        text = text.concat("{b}Date of service: -{/b}{br}");
+
+      text = text.concat("{b}Service Order No: {/b}" + $scope.Transaction.WONumber + "{br}");
+      text = text.concat("{b}Station: {/b}" + $scope.Transaction.Station + "{br}");
+      text = text.concat("{b}Airline: {/b}" + $scope.Transaction.AircraftCarrier + "{br}");
+      text = text.concat("{b}Flight Arrival No: {/b}" + $scope.Transaction.FlightNo + "{br}");
+      text = text.concat("{b}Aircraft Type: {/b}" + $scope.Transaction.AircraftType + "{br}");
       text = text.concat("{b}Aircraft Reg: {/b} " + $scope.Transaction.AircraftReg + "{br}");
-      text = text.concat("{b}Aircraft STA: {/b} " + GetTimeFormatFromDateFormat($scope.Transaction.ETA) + "{br}");
-      text = text.concat("{b}Aircraft STD: {/b} " + GetTimeFormatFromDateFormat($scope.Transaction.ETD) + "{br}");
+      text = text.concat("{b}Aircraft STA: {/b}" + GetTimeFormatFromDateFormat($scope.Transaction.ETA) + ' (' + GetDateFormatFromDateFormat($scope.Transaction.ETA) + ')' + "{br}");
+      text = text.concat("{b}Aircraft STD: {/b}" + GetTimeFormatFromDateFormat($scope.Transaction.ETD) + ' (' + GetDateFormatFromDateFormat($scope.Transaction.ETD) + ')' + "{br}");
       text = text.concat("{b}Gate No: {/b} " + $scope.Transaction.GateNo + "{br}");
-      text = text.concat("{b}PCA1: {/b} " + (($scope.Transaction.PCA1) ? "/" : "X") + ", ");
-      text = text.concat("{b}PCA2: {/b} " + (($scope.Transaction.PCA2) ? "/" : "X") + "{br}");
+      text = text.concat("{b}PCA1: {/b} " + (($scope.Transaction.PCA1) ? "Use" : "Not use") + ", ");
+      text = text.concat("{b}PCA2: {/b} " + (($scope.Transaction.PCA2) ? "Use" : "Not use") + "{br}");
 
       // text = text.concat("{b}PCAStart: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.PCAStart)) + "{br}");
       if($scope.Transaction.PCAStart && $scope.Transaction.PCAStart.length > 0)
-        text = text.concat("{b}PCAStart: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.PCAStart)) + "{br}");
+        text = text.concat("{b}PCAStart: {/b}" + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.PCAStart)) + "{br}");
       else
-        text = text.concat("{b}PCAStart: {/b} " + "-" + "{br}");
+        text = text.concat("{b}PCAStart: {/b}" + "-" + "{br}");
       if($scope.Transaction.PCAEnd && $scope.Transaction.PCAEnd.length > 0) 
-        text = text.concat("{b}PCAStop: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.PCAEnd)) + "{br}");
+        text = text.concat("{b}PCAStop: {/b}" + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.PCAEnd)) + "{br}");
       else 
-        text = text.concat("{b}PCAStop: {/b} " + "-" + "{br}"); 
+        text = text.concat("{b}PCAStop: {/b}" + "-" + "{br}"); 
       // text = text.concat("{b}PCAStop: {/b} " + (($scope.Transaction.PCAEnd && $scope.Transaction.PCAEnd.length > 0) ? GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.PCAEnd)) : '-' + "{br}");
 
-      text = text.concat("{b}PCA-Total Time (Min): {/b} " + $scope.Transaction.PCATotalMin + "{br}");
+      text = text.concat("{b}PCA-Total Time (Min): {/b}" + $scope.Transaction.PCATotalMin + "{br}");
 
-      text = text.concat("{b}GPU1: {/b} " + (($scope.Transaction.GPU1) ? "/" : "X") + ", ");
-      text = text.concat("{b}GPU2: {/b} " + (($scope.Transaction.GPU2) ? "/" : "X") + "{br}");
+      text = text.concat("{b}GPU1: {/b}" + (($scope.Transaction.GPU1) ? "Use" : "Not use") + ", ");
+      text = text.concat("{b}GPU2: {/b}" + (($scope.Transaction.GPU2) ? "Use" : "Not use") + "{br}");
 
       // text = text.concat("{b}GPUStart: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.GPUStart)) + "{br}");
       if($scope.Transaction.GPUStart && $scope.Transaction.GPUStart.length > 0)
-        text = text.concat("{b}GPUStart: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.GPUStart)) + "{br}");
+        text = text.concat("{b}GPUStart: {/b}" + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.GPUStart)) + "{br}");
       else
-        text = text.concat("{b}GPUStart: {/b} " + "-" + "{br}");
+        text = text.concat("{b}GPUStart: {/b}" + "-" + "{br}");
       if($scope.Transaction.GPUEnd && $scope.Transaction.GPUEnd.length > 0)
-        text = text.concat("{b}GPUStop: {/b} " + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.GPUEnd)) + '{br}');
+        text = text.concat("{b}GPUStop: {/b}" + GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.GPUEnd)) + '{br}');
       else
-        text = text.concat("{b}GPUStop: {/b} " + '-' + '{br}');
+        text = text.concat("{b}GPUStop: {/b}" + '-' + '{br}');
 
       // text = text.concat("{b}GPUStop: {/b} " + ($scope.Transaction.GPUEnd && $scope.Transaction.GPUEnd.length > 0) ? GetStartStopDateTimeTxt(GetNewDateByDTEDateFormat($scope.Transaction.GPUEnd)) : '-' + "{br}";
-      text = text.concat("{b}GPU-Total Time (Min): {/b} " + $scope.Transaction.GPUTotalMin + "{br}");
+      text = text.concat("{b}GPU-Total Time (Min): {/b}" + $scope.Transaction.GPUTotalMin + "{br}");
 
-      text = text.concat("{b}Cond: {/b} " + $scope.Transaction.CondOfCharge + "{br}");
-      text = text.concat("{b}Remark: {/b} " + ($scope.Transaction.Remark == null ? '-' : $scope.Transaction.Remark) + "{br}");
-      text = text.concat("{b}CreatedBy: {/b} " + $scope.Transaction.CreatedByName + "{br}");
-      text = text.concat("{b}UpdatedBy: {/b} " + ($scope.Transaction.UpdatedByName == null ? '-' : $scope.Transaction.UpdatedByName) + "{br}");
-      text = text.concat("{b}Airline: {/b}__________________{br}");
-      text = text.concat("{b}Staff: {/b}__________________{br}");
-
+      text = text.concat("{b}Cond: {/b}" + $scope.Transaction.CondOfCharge + "{br}");
+      text = text.concat("{b}Remark: {/b}" + ($scope.Transaction.Remark == null ? '-' : $scope.Transaction.Remark) + "{br}");
+      text = text.concat("{b}CreatedBy: {/b}" + $scope.Transaction.CreatedByName + "{br}");
+      text = text.concat("{b}UpdatedBy: {/b}" + ($scope.Transaction.UpdatedByName == null ? '-' : $scope.Transaction.UpdatedByName) + "{br}{br}{br}");
+      text = text.concat("{b}Signature Start: {/b}_____________{br}{br}{br}{br}");
+      text = text.concat("{b}Signature Stop: {/b}_____________");
+ 
       window.DatecsPrinter.printText(text, 'ISO-8859-1', 
         function() {
           //printMyImage();

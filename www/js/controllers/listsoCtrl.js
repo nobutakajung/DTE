@@ -8,15 +8,18 @@ angular.module('starter')
     $scope.station = GetUserStation();
     $scope.search = {SearchDate : ''};
 
-    function InitialListSO(){
+    //initial list so get top 100 so
+    GetListSO('');
+
+    function GetListSO(selectedDate){
       APIService.ShowLoading();
       var url = APIService.hostname() + '/SO/GetSO';
-      var data = {Station:$scope.station};
+      var data = {Station:$scope.station, SelectedDate: selectedDate};
       APIService.httpPost(url,data,
         function(response){
           APIService.HideLoading();
           if(response != null){
-            $scope.allDatas = response.data;
+            if(selectedDate = '') $scope.allDatas = response.data;
             $scope.transactions = response.data;
           }
         },
@@ -25,8 +28,6 @@ angular.module('starter')
           console.log(error);
         })
     }
-
-    InitialListSO();
 
     $scope.DeleteSO = function(id){
       if(confirm('ต้องการลบ SO นี้?')){
@@ -59,16 +60,18 @@ angular.module('starter')
 
     $scope.TimeChange = function(){
       var query = $scope.search.SearchDate.dateslashformat();
-      //filter by createdate
-      $scope.transactions =  [];
-      for (var i = 0; i <= $scope.allDatas.length - 1; i++) {
-        if($scope.allDatas[i].CreatedDateTxt.indexOf(query) >= 0) $scope.transactions.push($scope.allDatas[i]);
-      };
+      console.log(query);
+      GetListSO(query);
+      // //filter by createdate
+      // $scope.transactions =  [];
+      // for (var i = 0; i <= $scope.allDatas.length - 1; i++) {
+      //   if($scope.allDatas[i].CreatedDateTxt.indexOf(query) >= 0) $scope.transactions.push($scope.allDatas[i]);
+      // };
     };
 
     $scope.clearFilter = function(){
       $scope.search.SearchDate = '';
-      $scope.transactions = $scope.allDatas;
+      GetListSO('');
     };
 
   });

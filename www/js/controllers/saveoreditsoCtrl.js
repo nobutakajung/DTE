@@ -516,8 +516,8 @@ angular.module('starter')
       if($scope.saveso.aircraftreg == null || !$scope.saveso.aircraftreg || $scope.saveso.aircraftreg.length == 0) flag = false;
       //aircraft sta
       if($scope.saveso.aircraftsta == null || !$scope.saveso.aircraftsta || $scope.saveso.aircraftsta.length == 0) flag = false;
-      //aircraft std
-      if($scope.saveso.aircraftstd == null || !$scope.saveso.aircraftstd || $scope.saveso.aircraftstd.length == 0) flag = false;
+      // //aircraft std
+      // if($scope.saveso.aircraftstd == null || !$scope.saveso.aircraftstd || $scope.saveso.aircraftstd.length == 0) flag = false;
 
       if(flag) return true;
       else {

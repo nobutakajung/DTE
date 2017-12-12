@@ -63,7 +63,8 @@ function GetStartStopDateTimeTxt(currentdate) {
     var minute = currentdate.getMinutes().toString();
     minute = minute.length > 1 ? minute : '0' + minute;
 
-    var result =  day + "/" + month + "/" + year + " " + hour + ":" + minute;
+    // var result =  day + "/" + month + "/" + year + " " + hour + ":" + minute;
+    var result = hour + ":" + minute + ' ' + day + "/" + month + "/" + year + " ";
     return result;
 }
 
@@ -80,6 +81,11 @@ function DiffStartStopDate(startDate, stopDate, elemId) {
 
 function GetTimeFormatFromDateFormat(data) {
     var result = data.substring(8,10) + ':' + data.substring(10,12);
+    return result;
+}
+
+function GetDateFormatFromDateFormat(data){
+    var result = data.substring(6,8) + '/' + data.substring(4,6) + '/' + data.substring(0,4);
     return result;
 }
 

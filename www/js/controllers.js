@@ -1,6 +1,8 @@
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, AuthService, APIService, $ionicHistory, $ionicPopup) {
+  //version
+  $scope.version = '1.0';
 
   // Form data for the login modal
   $scope.loginData = {};
