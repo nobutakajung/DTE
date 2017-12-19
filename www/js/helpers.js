@@ -80,11 +80,13 @@ function DiffStartStopDate(startDate, stopDate, elemId) {
 }
 
 function GetTimeFormatFromDateFormat(data) {
+    if(data == null || !data) return '-';
     var result = data.substring(8,10) + ':' + data.substring(10,12);
     return result;
 }
 
 function GetDateFormatFromDateFormat(data){
+    if(data == null || !data) return '-';
     var result = data.substring(6,8) + '/' + data.substring(4,6) + '/' + data.substring(0,4);
     return result;
 }

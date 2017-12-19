@@ -47,9 +47,11 @@ angular.module('starter')
       $scope.saveso.gateno = data.GateNo;
       $scope.saveso.aircraftsta = data.STAValueTxt;
       $scope.saveso.aircraftstaTxt = GetNewDateByDTEDateFormat(data.STAValueTxt);
-      $scope.saveso.aircraftstd = data.STDValueTxt;
-      $scope.saveso.aircraftstdTxt = GetNewDateByDTEDateFormat(data.STDValueTxt);
-
+      if(data.STD != null)
+      {
+        $scope.saveso.aircraftstd = data.STDValueTxt;
+        $scope.saveso.aircraftstdTxt = GetNewDateByDTEDateFormat(data.STDValueTxt);  
+      }
       //get airline logo
       GetAirlineLogo(data.ACCarrier);
 
@@ -138,8 +140,11 @@ angular.module('starter')
       $scope.saveso.aircraftreg = data.AircraftReg;
       $scope.saveso.aircraftsta = data.ETA;
       $scope.saveso.aircraftstaTxt = GetNewDateByDTEDateFormat(data.ETA);
-      $scope.saveso.aircraftstd = data.ETD;
-      $scope.saveso.aircraftstdTxt = GetNewDateByDTEDateFormat(data.ETD);
+      if(data.ETD != '' && data.ETD != null)
+      {
+        $scope.saveso.aircraftstd = data.ETD;
+        $scope.saveso.aircraftstdTxt = GetNewDateByDTEDateFormat(data.ETD);  
+      }
       $scope.saveso.gateno = data.GateNo;
       $scope.saveso.startSignature = data.CustSignStart;
       $scope.saveso.stopSignature = data.CustSignStop;
@@ -521,7 +526,7 @@ angular.module('starter')
 
       if(flag) return true;
       else {
-        alert('Air-Carrier/ Flight-No/ Aircraft-Type/ Aircraft-Reg/ Aircraft STA/ Aircraft STD ห้ามเป็นค่าว่าง');
+        alert('Airline/ Flight-No/ Aircraft-Type/ Aircraft-Reg/ Aircraft STA ห้ามเป็นค่าว่าง');
         return false;
       }
     }

@@ -36,7 +36,7 @@ angular.module('starter')
       $scope.aircrafttype = data.AircraftType;
       $scope.aircraftreg = data.AircraftReg;
       $scope.aircraftstaTxt = GetNewDateByDTEDateFormat(data.ETA).datetimeslashformat();
-      $scope.aircraftstdTxt = GetNewDateByDTEDateFormat(data.ETD).datetimeslashformat();
+      if(data.ETD != null && data.ETD) $scope.aircraftstdTxt = GetNewDateByDTEDateFormat(data.ETD).datetimeslashformat();
       $scope.gateno = data.GateNo;
       $scope.startSignature = data.CustSignStart;
       $scope.stopSignature = data.CustSignStop;
@@ -234,7 +234,7 @@ angular.module('starter')
       text = text.concat("{b}UpdatedBy: {/b}" + ($scope.Transaction.UpdatedByName == null ? '-' : $scope.Transaction.UpdatedByName) + "{br}{br}{br}");
       text = text.concat("{b}Signature Start: {/b}_____________{br}{br}{br}{br}");
       text = text.concat("{b}Signature Stop: {/b}_____________");
- 
+
       window.DatecsPrinter.printText(text, 'ISO-8859-1', 
         function() {
           //printMyImage();
