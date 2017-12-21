@@ -69,25 +69,53 @@ angular.module('starter')
 })
 .service('FlightDataSQLite', function(SQLiteService){
 	this.Add = function(data){
-		var sql = "INSERT INTO flightdata (id, FlightNo, ACType, ACCarrier, ACReg, STA, STAValueTxt, STD, STDValueTxt, GateNo, CreateDate) VALUES ";
-		var param = []; 
-		var rowArgs = [];
-		data.forEach(function(item){
-			rowArgs.push("(?,?,?,?,?,?,?,?,?,?,?)");
-			param.push(item.id);
-			param.push(item.FlightNo);
-			param.push(item.ACType);
-			param.push(item.ACCarrier);
-			param.push(item.ACReg);
-			param.push(item.STA);
-			param.push(item.STAValueTxt);
-			param.push(item.STD);
-			param.push(item.STDValueTxt);
-			param.push(item.GateNo);
-			param.push(item.CreateDate);
-		});
-		sql += rowArgs.join(', ');
-		return SQLiteService.Execute(sql,param).then(function(response){return response;},function(error){console.log(error); return error;});
+		var result;
+		var i,j,temparray,chunk = 50;
+	    for (i=0,j=data.length; i<j; i+=chunk) {
+	        temparray = data.slice(i,i+chunk);
+	        //insert just 50 records for each round
+	        var sql = "INSERT INTO flightdata (id, FlightNo, ACType, ACCarrier, ACReg, STA, STAValueTxt, STD, STDValueTxt, GateNo, CreateDate) VALUES ";
+			var param = []; 
+			var rowArgs = [];
+			temparray.forEach(function(item){
+				rowArgs.push("(?,?,?,?,?,?,?,?,?,?,?)");
+				param.push(item.id);
+				param.push(item.FlightNo);
+				param.push(item.ACType);
+				param.push(item.ACCarrier);
+				param.push(item.ACReg);
+				param.push(item.STA);
+				param.push(item.STAValueTxt);
+				param.push(item.STD);
+				param.push(item.STDValueTxt);
+				param.push(item.GateNo);
+				param.push(item.CreateDate);
+			});
+			sql += rowArgs.join(', ');
+			result = SQLiteService.Execute(sql,param).then(function(response){return response;},function(error){console.log(error); return error;});
+	    }
+	    return result;
+
+		// var sql = "INSERT INTO flightdata (id, FlightNo, ACType, ACCarrier, ACReg, STA, STAValueTxt, STD, STDValueTxt, GateNo, CreateDate) VALUES ";
+		// var param = []; 
+		// var rowArgs = [];
+		// data.forEach(function(item){
+		// 	rowArgs.push("(?,?,?,?,?,?,?,?,?,?,?)");
+		// 	param.push(item.id);
+		// 	param.push(item.FlightNo);
+		// 	param.push(item.ACType);
+		// 	param.push(item.ACCarrier);
+		// 	param.push(item.ACReg);
+		// 	param.push(item.STA);
+		// 	param.push(item.STAValueTxt);
+		// 	param.push(item.STD);
+		// 	param.push(item.STDValueTxt);
+		// 	param.push(item.GateNo);
+		// 	param.push(item.CreateDate);
+		// });
+		// sql += rowArgs.join(', ');
+		// return SQLiteService.Execute(sql,param).then(function(response){return response;},function(error){console.log(error); return error;});
+
 	};
 
 	this.GetFlightDatas = function(){
