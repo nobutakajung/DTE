@@ -435,8 +435,9 @@ angular.module('starter')
     }
 
     function printSODetails() {
-      var text;
-      text = "{b}WONumber: {/b} " + $scope.EditTransaction.WONumber + "{br}";
+      var text = "";
+      text = text.concat("{b}Danthai Equipment{/b}{br}");
+      text = text.concat("{b}WONumber: {/b} " + $scope.EditTransaction.WONumber + "{br}");
       text = text.concat("{b}Station: {/b} " + $scope.EditTransaction.Station + "{br}");
       text = text.concat("{b}Air Carrier: {/b} " + $scope.EditTransaction.AircraftCarrier + "{br}");
       text = text.concat("{b}Flightn No: {/b} " + $scope.EditTransaction.FlightNo + "{br}");

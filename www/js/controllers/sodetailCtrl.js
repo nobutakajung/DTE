@@ -180,6 +180,8 @@ angular.module('starter')
 
       var text = "{br}";
 
+      text = text.concat("{b}Danthai Equipment{/b}{br}");
+
       if($scope.Transaction.PCAStart && $scope.Transaction.PCAStart.length > 0)
         text = text.concat("{b}Date of service: {/b}" + GetDateFormatFromDateFormat($scope.Transaction.PCAStart) + "{br}");
       else if($scope.Transaction.GPUStart && $scope.Transaction.GPUStart.length > 0) 
