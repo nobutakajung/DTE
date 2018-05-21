@@ -388,7 +388,7 @@ angular.module('starter')
       } 
       else{
         selectedDate = $scope.saveso.aircraftstdTxt;
-        recentValue = $scope.saveso.aircraftstd;
+        recentValue = (!$scope.saveso.aircraftstd || $scope.saveso.aircraftstd.length <= 0) ? GetStartStopDateTimeValue(new Date()) : $scope.saveso.aircraftstd;
       } 
 
       var hour = selectedDate.getHours().toString();
