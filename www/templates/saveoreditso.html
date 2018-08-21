@@ -118,7 +118,8 @@
 		    </span>
 		    <span>{{saveso.pca.startTxt}}</span>
 	  	</label>
-	  	<label ng-show="saveso.stopSignature && saveso.stopSignature.length > 0" class="item item-input">
+	  	<!-- <label ng-show="saveso.stopSignature && saveso.stopSignature.length > 0" class="item item-input"> -->
+	  	<label class="item item-input">
 		    <span class="input-label">
 		    	<button ng-disabled='!saveso.pca.start || saveso.pca.start.length <= 0' ng-click='stampStopDateTime(true)' class='button button-assertive'>Stop</button>
 		    </span>
@@ -149,7 +150,8 @@
 		    </span>
 		    <span>{{saveso.gpu.startTxt}}</span>
 	  	</label>
-	  	<label ng-show="saveso.stopSignature && saveso.stopSignature.length > 0" class="item item-input">
+	  	<!-- <label ng-show="saveso.stopSignature && saveso.stopSignature.length > 0" class="item item-input"> -->
+	  	<label class="item item-input">
 		    <span class="input-label"><button ng-disabled='!saveso.gpu.start || saveso.gpu.start.length <= 0' ng-click='stampStopDateTime(false)' class='button button-assertive'>Stop</button></span>
 		    <span>{{saveso.gpu.stopTxt}}</span>
 	  	</label>
@@ -198,6 +200,7 @@
 
 	</div>
 
+	<button type='button' class='button button-block button-balanced' ng-show='RefId != 0' ng-click='doUpdateTempSO()'>อัพเดตบันทึกชั่วคราว</button>
 	<button type='button' class='button button-block button-balanced' ng-show='RefId == 0' ng-click='doSaveOrEditSO(true)'>บันทึกชั่วคราว</button>
 	<button type='button' class='button button-block button-positive' ng-click='doSaveOrEditSO(false)'>{{title}}</button>
 

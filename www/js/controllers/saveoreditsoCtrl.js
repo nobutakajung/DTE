@@ -262,6 +262,37 @@ angular.module('starter')
       })
     }
 
+     $scope.doUpdateTempSO = function(){
+      if(!confirm('ต้องการอัพเดตบันทึกชั่วคราว?')) return;
+      if(!CheckValidate()) return;
+      APIService.ShowLoading();
+      var url = APIService.hostname() + '/SO/UpdateTempSO';
+      var data = {
+                  Station:$scope.saveso.station, FlightNo:$scope.saveso.flightno, ACType:$scope.saveso.aircrafttype, ACCarrier:$scope.saveso.aircarrier,
+                  ACReg:$scope.saveso.aircraftreg, STA:$scope.saveso.aircraftsta, STD:$scope.saveso.aircraftstd, GateNo:$scope.saveso.gateno,
+                  PCA1:$scope.saveso.pca.hose1, PCA2:$scope.saveso.pca.hose2, PCAStart:$scope.saveso.pca.start, PCAStop:$scope.saveso.pca.stop,
+                  PCATotalMin:$scope.saveso.pca.totaltime, GPU1:$scope.saveso.gpu.plug1, GPU2:$scope.saveso.gpu.plug2,
+                  GPUStart:$scope.saveso.gpu.start, GPUStop:$scope.saveso.gpu.stop, GPUTotalMin:$scope.saveso.gpu.totaltime,
+                  UserID:$scope.saveso.idno, CustIDStart:$scope.saveso.username, CustSignStart:$scope.saveso.startSignature,
+                  CustIDStop:$scope.saveso.username, CustSignStop:$scope.saveso.stopSignature, CondOfCharge:$scope.saveso.condition,
+                  Remark:$scope.saveso.remark, UploadImages:$scope.uploadImgs, Id:$scope.SOID, RefId: $scope.RefId
+                 };
+      APIService.httpPost(url,data,function(response){
+        APIService.HideLoading();
+        if(response != null && response.data.success == 1){
+          //success
+          var message = 'อัพเดตบันทึกชั่วคราวเรียบร้อย';
+          RedirecToHomePage(message);
+        }
+        else{
+          //not success
+          IonicAlert($ionicPopup,response.data.message,null);
+        }
+      },function(error){
+        APIService.HideLoading();
+      })
+    }
+
     function RedirecToHomePage (message) {
       //redirect to home page
       IonicAlert($ionicPopup, message, function(){

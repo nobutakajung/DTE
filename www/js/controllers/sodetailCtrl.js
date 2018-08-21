@@ -180,7 +180,8 @@ angular.module('starter')
 
       var text = "{br}";
 
-      text = text.concat("{h}Danthai Equipment{/h}{br}");
+      text = text.concat("{h}        Danthai Equipment{/h}{br}");
+      text = text.concat("{h}      PCA/GPU Service Order{/h}{br}");
 
       if($scope.Transaction.PCAStart && $scope.Transaction.PCAStart.length > 0)
         text = text.concat("{b}Date of service: {/b}" + GetDateFormatFromDateFormat($scope.Transaction.PCAStart) + "{br}");
@@ -234,8 +235,8 @@ angular.module('starter')
       text = text.concat("{b}Remark: {/b}" + ($scope.Transaction.Remark == null ? '-' : $scope.Transaction.Remark) + "{br}");
       text = text.concat("{b}CreatedBy: {/b}" + $scope.Transaction.CreatedByName + "{br}");
       text = text.concat("{b}UpdatedBy: {/b}" + ($scope.Transaction.UpdatedByName == null ? '-' : $scope.Transaction.UpdatedByName) + "{br}{br}{br}");
-      text = text.concat("{b}Signature Start: {/b}_____________{br}{br}{br}{br}");
-      text = text.concat("{b}Signature Stop: {/b}_____________");
+      text = text.concat("{b}Signature Airline: {/b}_____________{br}{br}{br}{br}");
+      text = text.concat("{b}Signature DTE: {/b}_____________");
       text = text.concat("{reset}");
 
       window.DatecsPrinter.printText(text, 'ISO-8859-1', 
