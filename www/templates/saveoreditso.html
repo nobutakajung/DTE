@@ -119,7 +119,7 @@
 		    <span>{{saveso.pca.startTxt}}</span>
 	  	</label>
 	  	<!-- <label ng-show="saveso.stopSignature && saveso.stopSignature.length > 0" class="item item-input"> -->
-	  	<label class="item item-input">
+	  	<label class="item item-input" ng-show='RefId != 0'>
 		    <span class="input-label">
 		    	<button ng-disabled='!saveso.pca.start || saveso.pca.start.length <= 0' ng-click='stampStopDateTime(true)' class='button button-assertive'>Stop</button>
 		    </span>
@@ -151,7 +151,7 @@
 		    <span>{{saveso.gpu.startTxt}}</span>
 	  	</label>
 	  	<!-- <label ng-show="saveso.stopSignature && saveso.stopSignature.length > 0" class="item item-input"> -->
-	  	<label class="item item-input">
+	  	<label class="item item-input" ng-show='RefId != 0'>
 		    <span class="input-label"><button ng-disabled='!saveso.gpu.start || saveso.gpu.start.length <= 0' ng-click='stampStopDateTime(false)' class='button button-assertive'>Stop</button></span>
 		    <span>{{saveso.gpu.stopTxt}}</span>
 	  	</label>
